@@ -3,6 +3,7 @@ import { InternshipCard as InternshipCardType, INTERNSHIP_CARD_ACTIONS } from '.
 import CardRenderer from './CardRenderer';
 import { InternshipCardExpanded } from './InternshipCardExpanded';
 import { Briefcase, MapPin, Clock, DollarSign } from 'lucide-react';
+import { WhyThisMatch } from './WhyThisMatch';
 
 interface InternshipCardProps {
   card: InternshipCardType;
@@ -56,6 +57,7 @@ export default function InternshipCard({
             <p className="text-sm text-gray-600">{summary.company.name} • {summary.company.industry}</p>
           </div>
         </div>
+        <WhyThisMatch internshipId={card.id} />
       </div>
 
       <div className="grid grid-cols-2 gap-3 text-sm text-gray-600">

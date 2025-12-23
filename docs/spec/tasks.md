@@ -327,17 +327,17 @@
 
 ### Matching Engine
 
-- [ ] T133 [US8] Implement matching algorithm at server/src/services/matching/match-algorithm.ts
-- [ ] T134 [US8] Implement skill overlap calculator (proof-weighted) at server/src/services/matching/skill-overlap.ts
-- [ ] T135 [US8] Implement availability alignment scorer at server/src/services/matching/availability-scorer.ts
-- [ ] T136 [US8] Implement behavior history analyzer at server/src/services/matching/behavior-analyzer.ts
-- [ ] T137 [US8] Implement plain-language explanation generator at server/src/services/matching/explanation-generator.ts
+- [x] T133 [US8] Implement matching algorithm at server/src/services/matching/match-algorithm.ts
+- [x] T134 [US8] Implement skill overlap calculator (proof-weighted) at server/src/services/matching/skill-overlap.ts
+- [x] T135 [US8] Implement availability alignment scorer at server/src/services/matching/availability-scorer.ts
+- [x] T136 [US8] Implement behavior history analyzer at server/src/services/matching/behavior-analyzer.ts
+- [x] T137 [US8] Implement plain-language explanation generator at server/src/services/matching/explanation-generator.ts
 
 ### Match Explanation UI
 
-- [ ] T138 [US8] Create match explanation component at app/src/components/matching/MatchExplanation.tsx
-- [ ] T139 [US8] Add "Why this match?" button to card views at app/src/components/cards/WhyThisMatch.tsx
-- [ ] T140 [US8] Create alignment factors display at app/src/components/matching/AlignmentFactors.tsx
+- [x] T138 [US8] Create match explanation component at app/src/components/matching/MatchExplanation.tsx
+- [x] T139 [US8] Add "Why this match?" button to card views at app/src/components/cards/WhyThisMatch.tsx
+- [x] T140 [US8] Create alignment factors display at app/src/components/matching/AlignmentFactors.tsx
 
 **Checkpoint**: User Story 8 complete - Trust through explainability
 

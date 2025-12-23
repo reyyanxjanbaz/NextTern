@@ -1,8 +1,27 @@
 import { Router } from 'express';
 import { prisma } from '../../db/client.js';
 import { authenticate } from '../middleware/auth.js';
+import { matchAlgorithm } from '../../services/matching/match-algorithm.js';
 
 const router = Router();
+
+// Get match explanation
+router.get('/explain/:internshipId', authenticate, async (req, res) => {
+  try {
+    const userId = req.user!.id;
+    const { internshipId } = req.params;
+
+    const result = await matchAlgorithm.evaluate(userId, internshipId);
+
+    res.json({
+      status: 'success',
+      data: result
+    });
+  } catch (error) {
+    console.error('Match explanation error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 // Get all matches for the current user
 router.get('/', authenticate, async (req, res) => {
