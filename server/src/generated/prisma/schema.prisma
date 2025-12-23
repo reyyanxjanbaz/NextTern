@@ -1,0 +1,639 @@
+// NextTern Database Schema
+// Constitution Article IV.1: Everything Is a Card
+// All primary entities are represented as cards with summary/expanded views
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// =============================================================================
+// ENUMS
+// =============================================================================
+
+/// User roles - immutable after creation (Spec 2.2)
+enum UserRole {
+  STUDENT
+  RECRUITER
+}
+
+/// Authentication status
+enum AuthStatus {
+  ANONYMOUS
+  PENDING
+  AUTHENTICATED
+  ONBOARDING
+}
+
+/// Card states for all card types
+enum CardState {
+  DRAFT
+  ACTIVE
+  PAUSED
+  ARCHIVED
+  DELETED
+}
+
+/// Application states - Constitution Article VI.2
+/// Explicit states are mandatory. Hidden states are forbidden.
+enum ApplicationState {
+  DISCOVERED
+  VIEWED
+  SHORTLISTED
+  CONTACTED
+  INTERVIEWING
+  DECIDED
+  CLOSED
+}
+
+/// Closure reasons for applications
+enum ClosureReason {
+  ACCEPTED
+  REJECTED
+  WITHDRAWN
+  EXPIRED
+  CANCELLED
+}
+
+/// Skill proficiency levels
+enum ProficiencyLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+}
+
+/// Project types
+enum ProjectType {
+  PERSONAL
+  ACADEMIC
+  PROFESSIONAL
+  HACKATHON
+  OPEN_SOURCE
+  FREELANCE
+  RESEARCH
+}
+
+/// Company size categories
+enum CompanySize {
+  STARTUP
+  SMALL
+  MEDIUM
+  LARGE
+  ENTERPRISE
+}
+
+/// Company stage
+enum CompanyStage {
+  EARLY_STAGE
+  GROWTH
+  ESTABLISHED
+  PUBLIC
+}
+
+// =============================================================================
+// USER & AUTHENTICATION (T026)
+// =============================================================================
+
+/// User model - core identity for authentication
+/// Spec 2.2: Roles are immutable after creation
+model User {
+  id             String     @id @default(cuid())
+  email          String     @unique
+  emailVerified  Boolean    @default(false)
+  authStatus     AuthStatus @default(ANONYMOUS)
+  role           UserRole?
+  roleAssignedAt DateTime?
+
+  // Onboarding
+  onboardingComplete Boolean @default(false)
+
+  // Timestamps
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  lastLoginAt DateTime?
+
+  // Preferences (JSON for flexibility)
+  preferences Json @default("{}")
+
+  // Recruiter company association
+  companyId String?
+
+  // Relations
+  profile      Profile?
+  company      Company? @relation("CompanyRecruiter", fields: [companyId], references: [id])
+  ownedCompany Company? @relation("CompanyOwner")
+
+  // Student relations
+  projects     Project[]
+  applications Application[] @relation("StudentApplications")
+
+  // Recruiter relations
+  internships          Internship[]
+  reviewedApplications Application[] @relation("RecruiterApplications")
+
+  // Chat relations
+  sentMessages       Message[]         @relation("MessageSender")
+  chatParticipations ChatParticipant[]
+
+  // Auth tokens
+  magicLinks MagicLink[]
+  sessions   Session[]
+
+  @@index([email])
+  @@index([role])
+}
+
+/// Magic link tokens for passwordless authentication
+model MagicLink {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique
+  email     String
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  @@index([tokenHash])
+  @@index([email])
+}
+
+/// Session management
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  isValid   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  @@index([userId])
+}
+
+// =============================================================================
+// PROFILE CARD (T027)
+// Constitution Article V.1: Identity Before Application
+// =============================================================================
+
+/// Profile model - Student identity card
+/// Students build identity ONCE, express intent through interaction
+model Profile {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Card metadata
+  state CardState @default(DRAFT)
+
+  // Identity snapshot
+  name     String
+  headline String?
+  photoUrl String?
+  location String?
+
+  // Education
+  institution    String?
+  degree         String?
+  fieldOfStudy   String?
+  graduationYear Int?
+
+  // Role Intent (what they're seeking)
+  roleTypes       String[] @default([])
+  industries      String[] @default([])
+  learningGoals   String[] @default([])
+  intentStatement String?
+
+  // Availability
+  availableFrom DateTime?
+  duration      String? // e.g., "3-6-months"
+  hoursPerWeek  String? // e.g., "full-time"
+  locationPrefs String[]  @default([])
+  timezone      String?
+
+  // External links
+  portfolioUrl String?
+  linkedinUrl  String?
+  githubUrl    String?
+  otherLinks   Json    @default("[]")
+
+  // Visibility
+  visibility     String  @default("discoverable")
+  isDiscoverable Boolean @default(false)
+
+  // Activity tracking
+  lastActiveAt DateTime @default(now())
+
+  // Profile strength/completeness
+  completenessScore Int @default(0)
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  skills       Skill[]
+  projects     Project[]
+  applications Application[]
+  matches      Match[]       @relation("StudentMatches")
+
+  @@index([userId])
+  @@index([isDiscoverable])
+  @@index([state])
+}
+
+/// Skills with proof linking
+/// Constitution Article V.2: Proof Over Claims
+model Skill {
+  id        String  @id @default(cuid())
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  name        String
+  category    String // technical, design, business, etc.
+  proficiency ProficiencyLevel @default(BEGINNER)
+
+  // Proof linking
+  hasProof Boolean @default(false)
+  proofs   Json    @default("[]") // Array of { type, reference, label }
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([profileId, name])
+  @@index([profileId])
+  @@index([name])
+}
+
+// =============================================================================
+// COMPANY & INTERNSHIP CARD (T028)
+// =============================================================================
+
+/// Company model - Employer organization
+model Company {
+  id String @id @default(cuid())
+
+  // Owner
+  ownerId String @unique
+  owner   User   @relation("CompanyOwner", fields: [ownerId], references: [id])
+
+  // Recruiters (many-to-one via User.companyId)
+  recruiters User[] @relation("CompanyRecruiter")
+
+  // Company details
+  name        String
+  logoUrl     String?
+  description String?
+  website     String?
+  industry    String?
+
+  size  CompanySize?
+  stage CompanyStage?
+
+  // Locations
+  locations String[] @default([])
+
+  // Verification
+  isVerified Boolean   @default(false)
+  verifiedAt DateTime?
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  internships Internship[]
+
+  @@index([ownerId])
+  @@index([name])
+}
+
+/// Internship model - Opportunity card
+/// Spec FR-011: Must contain role clarity, company context, learning outcomes
+model Internship {
+  id String @id @default(cuid())
+
+  // Ownership
+  recruiterId String
+  recruiter   User    @relation(fields: [recruiterId], references: [id])
+  companyId   String
+  company     Company @relation(fields: [companyId], references: [id])
+
+  // Card metadata
+  state CardState @default(DRAFT)
+
+  // Role Clarity
+  title            String
+  team             String?
+  purpose          String?
+  responsibilities String[] @default([])
+  collaboration    String[] @default([])
+
+  // Learning Outcomes
+  skillsToLearn       String[] @default([])
+  projectTypes        String[] @default([])
+  mentorshipAvailable Boolean  @default(false)
+  mentorshipDetails   String?
+  growthOpportunities String[] @default([])
+
+  // Practical Expectations
+  requiredSkills    Json     @default("[]") // Array of { skill, level }
+  preferredSkills   String[] @default([])
+  educationLevel    String?
+  educationFields   String[] @default([])
+  workAuthorization String?
+  otherRequirements String[] @default([])
+
+  // Compensation (transparency mandatory)
+  compensationType   String? // paid, stipend, unpaid, academic-credit
+  compensationAmount Json? // { value, currency, period }
+  benefits           String[] @default([])
+
+  // Duration & Timing
+  startDate         DateTime?
+  startDateFlexible Boolean   @default(false)
+  lengthMin         Int?
+  lengthMax         Int?
+  lengthUnit        String? // weeks, months
+  hoursPerWeekMin   Int?
+  hoursPerWeekMax   Int?
+  arrangement       String? // remote, hybrid, onsite
+  location          String?
+
+  // Application settings
+  deadline              DateTime?
+  positions             Int       @default(1)
+  positionsFilled       Int       @default(0)
+  acceptingApplications Boolean   @default(true)
+  applicationProcess    String?
+
+  // Publishing
+  publishedAt DateTime?
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  applications Application[]
+  matches      Match[]
+
+  @@index([recruiterId])
+  @@index([companyId])
+  @@index([state])
+  @@index([acceptingApplications])
+}
+
+// =============================================================================
+// PROJECT CARD (T029)
+// Constitution Article V.2: Proof Over Claims
+// =============================================================================
+
+/// Project model - Skill proof card
+/// Skills without evidence are weak signals
+model Project {
+  id String @id @default(cuid())
+
+  // Ownership
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  // Card metadata
+  state CardState @default(DRAFT)
+
+  // Basic info
+  title String
+  brief String?
+  type  ProjectType @default(PERSONAL)
+
+  // Story
+  description String?
+  problem     String?
+  solution    String?
+
+  // Contribution
+  role          String?
+  contributions String[] @default([])
+  teamSize      Int?
+  duration      String?
+
+  // Outcomes
+  outcomes Json @default("[]") // Array of { type, description, value? }
+
+  // Technologies
+  technologies       Json     @default("[]") // Array of { name, category }
+  demonstratedSkills String[] @default([])
+
+  // Links & Media
+  links     Json    @default("[]") // Array of { type, url, label }
+  media     Json    @default("[]") // Array of { type, url, alt, isPrimary }
+  thumbnail String?
+
+  // Timeline
+  startDate DateTime?
+  endDate   DateTime?
+  isOngoing Boolean   @default(false)
+
+  // Featured
+  isFeatured Boolean @default(false)
+
+  // Verification
+  verificationStatus String    @default("unverified")
+  verifiedBy         String?
+  verifiedAt         DateTime?
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([profileId])
+  @@index([isFeatured])
+  @@index([state])
+}
+
+// =============================================================================
+// APPLICATION & STATE MACHINE (T030)
+// Constitution Article VI.2: Hiring Is a Flow, Not a Search
+// =============================================================================
+
+/// Application model - State machine for hiring flow
+/// Spec FR-015: Every application MUST exist in exactly one state
+/// Spec FR-016: System MUST NOT allow ambiguous or hidden states
+model Application {
+  id String @id @default(cuid())
+
+  // Participants
+  studentId    String
+  student      User       @relation("StudentApplications", fields: [studentId], references: [id])
+  profileId    String
+  profile      Profile    @relation(fields: [profileId], references: [id])
+  recruiterId  String
+  recruiter    User       @relation("RecruiterApplications", fields: [recruiterId], references: [id])
+  internshipId String
+  internship   Internship @relation(fields: [internshipId], references: [id])
+
+  // State machine
+  currentState   ApplicationState @default(DISCOVERED)
+  stateEnteredAt DateTime         @default(now())
+
+  // State history for transparency
+  stateHistory Json @default("[]") // Array of StateHistoryEntry
+
+  // Closure details
+  closureReason   ClosureReason?
+  closedAt        DateTime?
+  closureFeedback String?
+
+  // View tracking
+  studentViewed   Boolean @default(true)
+  recruiterViewed Boolean @default(false)
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  match Match?
+  chat  Chat?
+
+  @@unique([studentId, internshipId])
+  @@index([studentId])
+  @@index([recruiterId])
+  @@index([internshipId])
+  @@index([currentState])
+  @@index([profileId])
+}
+
+// =============================================================================
+// MATCH MODEL (T031)
+// Constitution Article VII.1: Matching Requires Mutual Intent
+// =============================================================================
+
+/// Match model - Two-way interest confirmation
+/// Chat unlocks when mutual interest is confirmed
+model Match {
+  id String @id @default(cuid())
+
+  // Participants
+  profileId     String
+  profile       Profile     @relation("StudentMatches", fields: [profileId], references: [id])
+  internshipId  String
+  internship    Internship  @relation(fields: [internshipId], references: [id])
+  applicationId String      @unique
+  application   Application @relation(fields: [applicationId], references: [id])
+
+  // Interest signals
+  studentInterested     Boolean   @default(false)
+  studentInterestedAt   DateTime?
+  recruiterInterested   Boolean   @default(false)
+  recruiterInterestedAt DateTime?
+
+  // Match confirmation
+  isMatched Boolean   @default(false)
+  matchedAt DateTime?
+
+  // Chat unlocked when matched
+  chatUnlocked Boolean @default(false)
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  chat Chat?
+
+  @@unique([profileId, internshipId])
+  @@index([profileId])
+  @@index([internshipId])
+  @@index([isMatched])
+}
+
+// =============================================================================
+// CHAT & MESSAGES (T032)
+// =============================================================================
+
+/// Chat model - Conversation container
+/// Unlocked when mutual match is confirmed
+model Chat {
+  id String @id @default(cuid())
+
+  // Link to match
+  matchId       String      @unique
+  match         Match       @relation(fields: [matchId], references: [id])
+  applicationId String      @unique
+  application   Application @relation(fields: [applicationId], references: [id])
+
+  // Status
+  isActive Boolean @default(true)
+
+  // Last activity
+  lastMessageAt DateTime?
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  participants ChatParticipant[]
+  messages     Message[]
+
+  @@index([matchId])
+  @@index([isActive])
+}
+
+/// Chat participant tracking
+model ChatParticipant {
+  id     String @id @default(cuid())
+  chatId String
+  chat   Chat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  // Read tracking
+  lastReadAt  DateTime?
+  unreadCount Int       @default(0)
+
+  // Timestamps
+  joinedAt DateTime @default(now())
+
+  @@unique([chatId, userId])
+  @@index([chatId])
+  @@index([userId])
+}
+
+/// Message model - Individual chat messages
+model Message {
+  id       String @id @default(cuid())
+  chatId   String
+  chat     Chat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  senderId String
+  sender   User   @relation("MessageSender", fields: [senderId], references: [id])
+
+  // Content
+  content     String
+  contentType String @default("text") // text, attachment, system
+
+  // Attachments (optional)
+  attachments Json @default("[]")
+
+  // Status
+  isEdited  Boolean   @default(false)
+  editedAt  DateTime?
+  isDeleted Boolean   @default(false)
+  deletedAt DateTime?
+
+  // Timestamps
+  createdAt DateTime @default(now())
+
+  @@index([chatId])
+  @@index([senderId])
+  @@index([createdAt])
+}
