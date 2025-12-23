@@ -11,6 +11,7 @@ interface CardRendererProps {
   onAction?: (action: CardAction) => void;
   className?: string;
   defaultExpanded?: boolean;
+  renderSection?: (section: any) => React.ReactNode;
 }
 
 export const CardRenderer: React.FC<CardRendererProps> = ({
@@ -18,6 +19,7 @@ export const CardRenderer: React.FC<CardRendererProps> = ({
   onAction,
   className,
   defaultExpanded = false,
+  renderSection,
 }) => {
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
 
@@ -162,8 +164,9 @@ export const CardRenderer: React.FC<CardRendererProps> = ({
                 {section.title}
               </h4>
               <div className="text-sm text-gray-600">
-                {/* Handle different content types if needed, for now assuming string or simple render */}
-                {typeof section.content === 'string' ? (
+                {renderSection ? (
+                  renderSection(section)
+                ) : typeof section.content === 'string' ? (
                   <p>{section.content}</p>
                 ) : (
                   <pre className="text-xs bg-gray-50 p-2 rounded">
