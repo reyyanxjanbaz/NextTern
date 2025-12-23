@@ -77,13 +77,13 @@
 - [x] T032 [P] Define Chat and Message models in server/prisma/schema.prisma
 - [x] T033 Generate Prisma client and create initial migration at server/prisma/
 
-### Backend Core Infrastructure
+### Backend Core Infrastructure ✅ COMPLETE
 
-- [ ] T034 Setup Express/Fastify server with middleware at server/src/index.ts
-- [ ] T035 [P] Implement authentication middleware at server/src/api/middleware/auth.ts
-- [ ] T036 [P] Implement role-based access middleware at server/src/api/middleware/role-guard.ts
-- [ ] T037 [P] Implement error handling middleware (explain, suggest recovery) at server/src/api/middleware/error-handler.ts
-- [ ] T038 Setup API router structure at server/src/api/routes/index.ts
+- [x] T034 Setup Express/Fastify server with middleware at server/src/index.ts
+- [x] T035 [P] Implement authentication middleware at server/src/api/middleware/auth.ts
+- [x] T036 [P] Implement role-based access middleware at server/src/api/middleware/role-guard.ts
+- [x] T037 [P] Implement error handling middleware (explain, suggest recovery) at server/src/api/middleware/error-handler.ts
+- [x] T038 Setup API router structure at server/src/api/routes/index.ts
 
 ### Frontend Core Infrastructure
 
