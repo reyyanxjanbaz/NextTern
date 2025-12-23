@@ -246,22 +246,22 @@
 
 ### State Machine
 
-- [ ] T103 [US5] Implement application state machine at server/src/services/state/application-state-machine.ts
-- [ ] T104 [US5] Define valid state transitions at server/src/services/state/state-transitions.ts
-- [ ] T105 [US5] Implement state transition logging at server/src/services/state/state-logger.ts
+- [x] T103 [US5] Implement application state machine at server/src/services/state/application-state-machine.ts
+- [x] T104 [US5] Define valid state transitions at server/src/services/state/state-transitions.ts
+- [x] T105 [US5] Implement state transition logging at server/src/services/state/state-logger.ts
 
 ### Status Card
 
-- [ ] T106 [US5] Create StatusCard component at app/src/components/cards/StatusCard.tsx
-- [ ] T107 [US5] Implement time-in-state calculator at app/src/utils/time-in-state.ts
-- [ ] T108 [US5] Create next outcomes display at app/src/components/status/NextOutcomes.tsx
-- [ ] T109 [US5] Implement stale application indicator at app/src/components/status/StaleIndicator.tsx
+- [x] T106 [US5] Create StatusCard component at app/src/components/cards/StatusCard.tsx
+- [x] T107 [US5] Implement time-in-state calculator at app/src/utils/time-in-state.ts
+- [x] T108 [US5] Create next outcomes display at app/src/components/status/NextOutcomes.tsx
+- [x] T109 [US5] Implement stale application indicator at app/src/components/status/StaleIndicator.tsx
 
 ### Student Application Tracker
 
-- [ ] T110 [US5] Build application tracker page at app/src/pages/student/ApplicationTracker.tsx
-- [ ] T111 [US5] Create visual application flow component at app/src/components/status/ApplicationFlow.tsx
-- [ ] T112 [US5] Implement proactive silence surfacing at app/src/components/status/SilenceAlert.tsx
+- [x] T110 [US5] Build application tracker page at app/src/pages/student/ApplicationTracker.tsx
+- [x] T111 [US5] Create visual application flow component at app/src/components/status/ApplicationFlow.tsx
+- [x] T112 [US5] Implement proactive silence surfacing at app/src/components/status/SilenceAlert.tsx
 
 **Checkpoint**: User Story 5 complete - Students never wonder "what is happening?"
 
