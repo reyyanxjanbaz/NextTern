@@ -221,18 +221,18 @@
 
 ### Recruiter Discovery Modes
 
-- [ ] T094 [US4] Build recruiter discovery page with mode toggle at app/src/pages/recruiter/CandidateDiscovery.tsx
-- [ ] T095 [US4] Implement recruiter swipe mode at app/src/components/discovery/RecruiterSwipeMode.tsx
-- [ ] T096 [US4] Implement review mode (filterable list) at app/src/components/discovery/ReviewMode.tsx
-- [ ] T097 [US4] Create filter controls component at app/src/components/discovery/FilterControls.tsx
-- [ ] T098 [US4] Create candidate comparison view at app/src/components/discovery/ComparisonView.tsx
+- [x] T094 [US4] Build recruiter discovery page with mode toggle at app/src/pages/recruiter/CandidateDiscovery.tsx
+- [x] T095 [US4] Implement recruiter swipe mode at app/src/components/discovery/RecruiterSwipeMode.tsx
+- [x] T096 [US4] Implement review mode (filterable list) at app/src/components/discovery/ReviewMode.tsx
+- [x] T097 [US4] Create filter controls component at app/src/components/discovery/FilterControls.tsx
+- [x] T098 [US4] Create candidate comparison view at app/src/components/discovery/ComparisonView.tsx
 
 ### Shortlisting
 
-- [ ] T099 [US4] Implement shortlist service at server/src/services/shortlist.ts
-- [ ] T100 [US4] Create shortlist routes at server/src/api/routes/shortlist.ts
-- [ ] T101 [US4] Build shortlist action component at app/src/components/discovery/ShortlistAction.tsx
-- [ ] T102 [US4] Create shortlisted candidates view at app/src/pages/recruiter/Shortlist.tsx
+- [x] T099 [US4] Implement shortlist service at server/src/services/shortlist.ts
+- [x] T100 [US4] Create shortlist routes at server/src/api/routes/shortlist.ts
+- [x] T101 [US4] Build shortlist action component at app/src/components/discovery/ShortlistAction.tsx
+- [x] T102 [US4] Create shortlisted candidates view at app/src/pages/recruiter/Shortlist.tsx
 
 **Checkpoint**: User Story 4 complete - Recruiters can discover and shortlist candidates
 

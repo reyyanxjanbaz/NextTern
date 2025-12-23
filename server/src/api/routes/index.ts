@@ -7,6 +7,7 @@
 
 import { Router } from 'express';
 import { authenticate } from '../middleware/auth.js';
+import shortlistRoutes from './shortlist.js';
 
 // Import feature routers (placeholders for now)
 // import authRoutes from './auth.routes.js';
@@ -44,6 +45,7 @@ router.use(authenticate);
 
 // Recruiter-specific features (posting, pipeline)
 // router.use('/recruiter', recruiterRoutes);
+router.use('/shortlist', shortlistRoutes);
 
 // Chat and messaging
 // router.use('/chat', chatRoutes);
