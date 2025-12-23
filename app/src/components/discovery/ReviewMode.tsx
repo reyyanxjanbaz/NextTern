@@ -19,8 +19,8 @@ export const ReviewMode: React.FC = () => {
     setLoading(true);
     try {
       // TODO: Replace with actual API call
-      // const res = await api.get('/discovery/candidates?mode=review');
-      // setCandidates(res.data);
+      // const res = await api.get<ProfileCardType[]>('/discovery/candidates?mode=review');
+      // setCandidates(res);
       setCandidates([]);
     } catch (error) {
       console.error('Failed to fetch candidates:', error);

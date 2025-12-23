@@ -24,7 +24,7 @@ export default function SwipeContainer({ cards: initialCards, onSwipe, onEmpty, 
 
   useEffect(() => {
     // Fetch initial limit status
-    api.get('/interest/limit').then((res) => setLimitStatus(res.data));
+    api.get<any>('/interest/limit').then((res) => setLimitStatus(res));
   }, []);
 
   const activeCard = cards[0];

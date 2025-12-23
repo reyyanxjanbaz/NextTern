@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { interestService } from '../../services/interest';
-import { swipeLimiter } from '../../services/swipe-limiter';
-import { requireAuth, requireRole } from '../middleware/auth';
+import { interestService } from '../../services/interest.js';
+import { swipeLimiter } from '../../services/swipe-limiter.js';
+import { requireAuth, requireRole } from '../middleware/auth.js';
 
 const router = Router();
 

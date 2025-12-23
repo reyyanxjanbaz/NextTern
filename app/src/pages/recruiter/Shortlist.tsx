@@ -22,8 +22,8 @@ export const Shortlist: React.FC = () => {
       // Let's assume we map it here or the API is adjusted.
       // For now, I'll assume the API returns a list of objects that contain the profile.
       
-      // const res = await api.get(`/shortlist/${internshipId}`);
-      // setCandidates(res.data.map((app: any) => app.profile));
+      // const res = await api.get<any[]>(`/shortlist/${internshipId}`);
+      // setCandidates(res.map((app: any) => app.profile));
       
       setCandidates([]);
     } catch (error) {

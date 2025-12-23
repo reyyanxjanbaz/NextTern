@@ -1,5 +1,5 @@
-import { prisma } from '../db/client';
-import { ApplicationState } from '../generated/prisma';
+import { prisma } from '../db/client.js';
+import { ApplicationState } from '../generated/prisma/index.js';
 
 export class ShortlistService {
   /**

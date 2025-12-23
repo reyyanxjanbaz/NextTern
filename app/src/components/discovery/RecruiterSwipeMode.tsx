@@ -19,8 +19,8 @@ export const RecruiterSwipeMode: React.FC = () => {
     setLoading(true);
     try {
       // TODO: Replace with actual API call when backend is ready
-      // const res = await api.get('/discovery/candidates');
-      // setCards(res.data);
+      // const res = await api.get<ProfileCardType[]>('/discovery/candidates');
+      // setCards(res);
       
       // Mock data for now
       setCards([]); 

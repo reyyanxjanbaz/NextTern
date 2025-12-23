@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { shortlistService } from '../../services/shortlist';
-import { authenticate } from '../middleware/auth';
-import { requireRole } from '../middleware/role-guard';
-import { UserRole } from '../../../../shared/types/user'; // Adjust import path as needed
+import { shortlistService } from '../../services/shortlist.js';
+import { authenticate } from '../middleware/auth.js';
+import { requireRole } from '../middleware/role-guard.js';
+import { UserRole } from '@nexttern/shared';
 
 const router = Router();
 
