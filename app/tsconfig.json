@@ -24,7 +24,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@nexttern/shared": ["../shared/types"]
+      "@shared/*": ["../shared/*"],
+      "@design/*": ["../design/*"]
     }
   },
   "include": ["src"],

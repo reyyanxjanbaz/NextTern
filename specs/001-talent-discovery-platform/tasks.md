@@ -87,17 +87,17 @@
 
 ### Frontend Core Infrastructure
 
-- [ ] T039 Initialize React app with Vite at app/
-- [ ] T040 [P] Configure React Router with role-based routing at app/src/router/index.tsx
-- [ ] T041 [P] Create auth context and hooks at app/src/contexts/AuthContext.tsx
-- [ ] T042 [P] Create API client service at app/src/services/api.ts
-- [ ] T043 Setup state management (Zustand or similar) at app/src/stores/index.ts
+- [x] T039 Initialize React app with Vite at app/
+- [x] T040 [P] Configure React Router with role-based routing at app/src/router/index.tsx
+- [x] T041 [P] Create auth context and hooks at app/src/contexts/AuthContext.tsx
+- [x] T042 [P] Create API client service at app/src/services/api.ts
+- [x] T043 Setup state management (Zustand or similar) at app/src/stores/index.ts
 
 ### Card Rendering Engine
 
-- [ ] T044 Build generic CardRenderer component with summary/expanded states at app/src/components/cards/CardRenderer.tsx
-- [ ] T045 [P] Implement expand/collapse animation (motion tokens) at app/src/components/cards/CardAnimations.tsx
-- [ ] T046 [P] Create CardActions slot component at app/src/components/cards/CardActions.tsx
+- [x] T044 Build generic CardRenderer component with summary/expanded states at app/src/components/cards/CardRenderer.tsx
+- [x] T045 [P] Implement expand/collapse animation (motion tokens) at app/src/components/cards/CardAnimations.tsx
+- [x] T046 [P] Create CardActions slot component at app/src/components/cards/CardActions.tsx
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
