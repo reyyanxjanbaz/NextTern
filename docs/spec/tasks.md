@@ -196,18 +196,18 @@
 
 ### Swipe Discovery UI
 
-- [ ] T085 [US3] Build swipe container component at app/src/components/discovery/SwipeContainer.tsx
-- [ ] T086 [US3] Implement swipe gesture handler (left/right/long-press) at app/src/hooks/useSwipeGesture.ts
-- [ ] T087 [US3] Create swipe feedback animations at app/src/components/discovery/SwipeFeedback.tsx
-- [ ] T088 [US3] Build student discovery page at app/src/pages/student/Discovery.tsx
-- [ ] T089 [US3] Implement daily swipe limit UI at app/src/components/discovery/SwipeLimitIndicator.tsx
+- [x] T085 [US3] Build swipe container component at app/src/components/discovery/SwipeContainer.tsx
+- [x] T086 [US3] Implement swipe gesture handler (left/right/long-press) at app/src/hooks/useSwipeGesture.ts
+- [x] T087 [US3] Create swipe feedback animations at app/src/components/discovery/SwipeFeedback.tsx
+- [x] T088 [US3] Build student discovery page at app/src/pages/student/Discovery.tsx
+- [x] T089 [US3] Implement daily swipe limit UI at app/src/components/discovery/SwipeLimitIndicator.tsx
 
 ### Interest Recording
 
-- [ ] T090 [US3] Implement interest service (record swipe decisions) at server/src/services/interest.ts
-- [ ] T091 [US3] Create interest routes at server/src/api/routes/interest.ts
-- [ ] T092 [US3] Implement daily limit enforcement at server/src/services/swipe-limiter.ts
-- [ ] T093 [US3] Create interested internships list view at app/src/pages/student/InterestedList.tsx
+- [x] T090 [US3] Implement interest service (record swipe decisions) at server/src/services/interest.ts
+- [x] T091 [US3] Create interest routes at server/src/api/routes/interest.ts
+- [x] T092 [US3] Implement daily limit enforcement at server/src/services/swipe-limiter.ts
+- [x] T093 [US3] Create interested internships list view at app/src/pages/student/InterestedList.tsx
 
 **Checkpoint**: User Story 3 complete - Students can discover and express interest
 

@@ -17,7 +17,24 @@ export default function InternshipCard({
   onToggleExpand,
   onAction,
 }: InternshipCardProps) {
-  const { summary } = card;
+  const { summary, expanded } = card;
+
+  // Generate sections dynamically from the structured data
+  const sections = [
+    { id: 'role-clarity', title: 'Role Clarity', content: expanded.role },
+    { id: 'company-context', title: 'Company Context', content: expanded.company },
+    { id: 'learning-outcomes', title: 'Learning Outcomes', content: expanded.learning },
+    { id: 'expectations', title: 'Practical Expectations', content: expanded.expectations },
+    { id: 'compensation', title: 'Duration & Compensation', content: { compensation: expanded.compensation, duration: expanded.duration } },
+  ];
+
+  const cardWithSections = {
+    ...card,
+    expanded: {
+      ...card.expanded,
+      sections,
+    },
+  };
 
   const renderSummary = () => (
     <div className="flex flex-col space-y-4">
