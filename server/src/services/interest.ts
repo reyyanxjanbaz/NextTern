@@ -1,7 +1,7 @@
-import { PrismaClient, ApplicationState, ClosureReason } from '@prisma/client';
-import { swipeLimiter } from './swipe-limiter';
-
-const prisma = new PrismaClient();
+import { prisma } from '../db/client.js';
+import { ApplicationState, ClosureReason } from '../generated/prisma/index.js';
+import { swipeLimiter } from './swipe-limiter.js';
+import { matchDetector } from './matching/match-detector.js';
 
 export class InterestService {
   /**
@@ -32,6 +32,7 @@ export class InterestService {
       throw new Error('Internship not found');
     }
 
+    // Use transaction for atomicity
     return prisma.$transaction(async (tx) => {
       // Double-check limit inside transaction to prevent race conditions
       const todayStart = new Date();
@@ -54,7 +55,6 @@ export class InterestService {
       }
 
       // 4. Create or update the Application record
-      // This tracks the interaction and counts towards the daily limit
       const application = await tx.application.upsert({
         where: {
           studentId_internshipId: {
@@ -63,9 +63,8 @@ export class InterestService {
           },
         },
         update: {
-          // If updating, we might be changing state, but usually swipes happen once per discovery
           studentViewed: true,
-          currentState: action === 'interested' ? ApplicationState.VIEWED : ApplicationState.CLOSED,
+          currentState: action === 'interested' ? ApplicationState.DISCOVERED : ApplicationState.CLOSED,
           closureReason: action === 'pass' ? ClosureReason.REJECTED : undefined,
           closedAt: action === 'pass' ? new Date() : undefined,
         },
@@ -74,7 +73,7 @@ export class InterestService {
           profileId: profile.id,
           internshipId,
           recruiterId: internship.recruiterId,
-          currentState: action === 'interested' ? ApplicationState.VIEWED : ApplicationState.CLOSED,
+          currentState: action === 'interested' ? ApplicationState.DISCOVERED : ApplicationState.CLOSED,
           closureReason: action === 'pass' ? ClosureReason.REJECTED : undefined,
           closedAt: action === 'pass' ? new Date() : undefined,
           studentViewed: true,
@@ -82,57 +81,83 @@ export class InterestService {
       });
 
       // 5. Manage the Match record
-      // We always create a match record to track the specific "studentInterested" signal
-      // even if it's false (pass), so we know not to show it again.
-      const match = await tx.match.upsert({
-        where: {
-          profileId_internshipId: {
-            profileId: profile.id,
-            internshipId,
-          },
-        },
-        update: {
-          studentInterested: action === 'interested',
-          studentInterestedAt: new Date(),
-          // Check for mutual match if student is interested
-          isMatched: action === 'interested' ? undefined : false, // If pass, definitely not matched
-        },
-        create: {
-          profileId: profile.id,
-          internshipId,
-          applicationId: application.id,
-          studentInterested: action === 'interested',
-          studentInterestedAt: new Date(),
-        },
-      });
-
-      // 6. Check for Mutual Match (Unlock Chat)
-      if (action === 'interested' && match.recruiterInterested) {
-        await tx.match.update({
-          where: { id: match.id },
-          data: {
-            isMatched: true,
-            matchedAt: new Date(),
-            chatUnlocked: true,
-          },
-        });
+      if (action === 'interested') {
+        // We can't use matchDetector inside transaction easily if it uses the global prisma instance.
+        // But we can replicate the logic or pass the tx to matchDetector (if we refactor it).
+        // For now, let's just do the match update here to keep the transaction benefits.
         
-        // Create the Chat
-        await tx.chat.create({
-          data: {
-            matchId: match.id,
-            applicationId: application.id,
-            participants: {
-              create: [
-                { userId: studentId },
-                { userId: internship.recruiterId },
-              ],
+        const match = await tx.match.upsert({
+          where: {
+            profileId_internshipId: {
+              profileId: profile.id,
+              internshipId,
             },
           },
+          update: {
+            studentInterested: true,
+            studentInterestedAt: new Date(),
+            applicationId: application.id,
+          },
+          create: {
+            profileId: profile.id,
+            internshipId,
+            applicationId: application.id,
+            studentInterested: true,
+            studentInterestedAt: new Date(),
+          },
         });
-      }
 
-      return { application, match };
+        // Check for Mutual Match
+        if (match.recruiterInterested && !match.isMatched) {
+           const updatedMatch = await tx.match.update({
+            where: { id: match.id },
+            data: {
+              isMatched: true,
+              matchedAt: new Date(),
+              chatUnlocked: true,
+            },
+          });
+          
+          // Create Chat
+          await tx.chat.create({
+            data: {
+              matchId: match.id,
+              applicationId: application.id,
+              participants: {
+                create: [
+                  { userId: studentId },
+                  { userId: internship.recruiterId },
+                ],
+              },
+            },
+          });
+          
+          // We should emit the event, but outside the transaction or after it.
+          // We'll return a flag.
+          return { application, match: updatedMatch, matched: true };
+        }
+        return { application, match, matched: false };
+      } else {
+        // Pass action - ensure no match
+         const match = await tx.match.upsert({
+          where: {
+            profileId_internshipId: {
+              profileId: profile.id,
+              internshipId,
+            },
+          },
+          update: {
+            studentInterested: false,
+          },
+          create: {
+            profileId: profile.id,
+            internshipId,
+            applicationId: application.id,
+            studentInterested: false,
+          },
+        });
+        return { application, match, matched: false };
+      }
     });
   }
 

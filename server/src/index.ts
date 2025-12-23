@@ -66,6 +66,7 @@ app.get('/health', async (req, res) => {
 
 import apiRouter from './api/routes/index.js';
 import { errorHandler } from './api/middleware/error-handler.js';
+import { initWebSocket } from './services/chat/websocket.js';
 
 // Mount API routes
 app.use('/api/v1', apiRouter);
@@ -84,6 +85,9 @@ const server = app.listen(PORT, () => {
 🔗 URL: http://localhost:${PORT}
   `);
 });
+
+// Initialize WebSocket Server
+initWebSocket(server);
 
 // Graceful shutdown
 process.on('SIGTERM', () => {

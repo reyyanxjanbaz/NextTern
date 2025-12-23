@@ -8,6 +8,10 @@
 import { Router } from 'express';
 import { authenticate } from '../middleware/auth.js';
 import shortlistRoutes from './shortlist.js';
+import interestRoutes from './interest.js';
+import matchRoutes from './match.js';
+import chatRoutes from './chat.js';
+import pipelineRoutes from './pipeline.js';
 
 // Import feature routers (placeholders for now)
 // import authRoutes from './auth.routes.js';
@@ -46,8 +50,9 @@ router.use(authenticate);
 // Recruiter-specific features (posting, pipeline)
 // router.use('/recruiter', recruiterRoutes);
 router.use('/shortlist', shortlistRoutes);
-
-// Chat and messaging
-// router.use('/chat', chatRoutes);
+router.use('/interest', interestRoutes);
+router.use('/matches', matchRoutes);
+router.use('/chat', chatRoutes);
+router.use('/pipeline', pipelineRoutes);
 
 export default router;

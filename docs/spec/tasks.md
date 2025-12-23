@@ -26,15 +26,15 @@
 
 **Purpose**: Repository initialization and foundational structure
 
-- [ ] T001 Create repository with README.md containing project summary at root
-- [ ] T002 [P] Create folder structure: app/, server/, design/, docs/ at repository root
-- [ ] T003 [P] Create shared types folder at shared/types/ for cross-platform schemas
-- [ ] T004 [P] Initialize TypeScript configuration at app/tsconfig.json
-- [ ] T005 [P] Initialize TypeScript configuration at server/tsconfig.json
-- [ ] T006 [P] Configure ESLint and Prettier at root .eslintrc.js and .prettierrc
-- [ ] T007 [P] Create package.json with workspaces configuration at root
-- [ ] T008 [P] Add spec files to docs/spec/ (constitution.md, specify.md, plan.md, tasks.md)
-- [ ] T009 Create .gitignore with node_modules, dist, .env patterns at root
+- [x] T001 Create repository with README.md containing project summary at root
+- [x] T002 [P] Create folder structure: app/, server/, design/, docs/ at repository root
+- [x] T003 [P] Create shared types folder at shared/types/ for cross-platform schemas
+- [x] T004 [P] Initialize TypeScript configuration at app/tsconfig.json
+- [x] T005 [P] Initialize TypeScript configuration at server/tsconfig.json
+- [x] T006 [P] Configure ESLint and Prettier at root .eslintrc.js and .prettierrc
+- [x] T007 [P] Create package.json with workspaces configuration at root
+- [x] T008 [P] Add spec files to docs/spec/ (constitution.md, specify.md, plan.md, tasks.md)
+- [x] T009 Create .gitignore with node_modules, dist, .env patterns at root
 
 ---
 
@@ -46,58 +46,58 @@
 
 ### Design Token Lock (Constitution Article VIII.2)
 
-- [ ] T010 Define color tokens (background, primary, secondary, accent, danger, success) in design/tokens/colors.ts
-- [ ] T011 [P] Define typography scale (font family, sizes, weights, line heights) in design/tokens/typography.ts
-- [ ] T012 [P] Define spacing scale (base unit, increments, layout margins) in design/tokens/spacing.ts
-- [ ] T013 [P] Define radius and shadow tokens (soft shadows only, consistent radius) in design/tokens/shadows.ts
-- [ ] T014 [P] Define motion timing rules (state transitions only) in design/tokens/motion.ts
-- [ ] T015 Export all tokens from design/tokens/index.ts
-- [ ] T016 Create TailwindCSS configuration using design tokens at app/tailwind.config.js
+- [x] T010 Define color tokens (background, primary, secondary, accent, danger, success) in design/tokens/colors.ts
+- [x] T011 [P] Define typography scale (font family, sizes, weights, line heights) in design/tokens/typography.ts
+- [x] T012 [P] Define spacing scale (base unit, increments, layout margins) in design/tokens/spacing.ts
+- [x] T013 [P] Define radius and shadow tokens (soft shadows only, consistent radius) in design/tokens/shadows.ts
+- [x] T014 [P] Define motion timing rules (state transitions only) in design/tokens/motion.ts
+- [x] T015 Export all tokens from design/tokens/index.ts
+- [x] T016 Create TailwindCSS configuration using design tokens at app/tailwind.config.js
 
 ### Core Data Models (Shared)
 
-- [ ] T017 Define Card base interface (id, type, summary, expanded, state, actions) in shared/types/card.ts
-- [ ] T018 [P] Define ProfileCard schema extending Card in shared/types/profile-card.ts
-- [ ] T019 [P] Define InternshipCard schema extending Card in shared/types/internship-card.ts
-- [ ] T020 [P] Define ProjectCard schema extending Card in shared/types/project-card.ts
-- [ ] T021 [P] Define StatusCard schema extending Card in shared/types/status-card.ts
-- [ ] T022 [P] Define ApplicationState enum (discovered, viewed, shortlisted, contacted, interviewing, decided, closed) in shared/types/application-state.ts
-- [ ] T023 [P] Define User and Role types (Student, Recruiter) in shared/types/user.ts
-- [ ] T024 Export all types from shared/types/index.ts
+- [x] T017 Define Card base interface (id, type, summary, expanded, state, actions) in shared/types/card.ts
+- [x] T018 [P] Define ProfileCard schema extending Card in shared/types/profile-card.ts
+- [x] T019 [P] Define InternshipCard schema extending Card in shared/types/internship-card.ts
+- [x] T020 [P] Define ProjectCard schema extending Card in shared/types/project-card.ts
+- [x] T021 [P] Define StatusCard schema extending Card in shared/types/status-card.ts
+- [x] T022 [P] Define ApplicationState enum (discovered, viewed, shortlisted, contacted, interviewing, decided, closed) in shared/types/application-state.ts
+- [x] T023 [P] Define User and Role types (Student, Recruiter) in shared/types/user.ts
+- [x] T024 Export all types from shared/types/index.ts
 
 ### Database Schema
 
-- [ ] T025 Initialize Prisma with PostgreSQL configuration at server/prisma/schema.prisma
-- [ ] T026 Define User model with role field in server/prisma/schema.prisma
-- [ ] T027 [P] Define Profile model (student identity) in server/prisma/schema.prisma
-- [ ] T028 [P] Define Internship model in server/prisma/schema.prisma
-- [ ] T029 [P] Define Project model in server/prisma/schema.prisma
-- [ ] T030 [P] Define Application model with state machine field in server/prisma/schema.prisma
-- [ ] T031 [P] Define Match model in server/prisma/schema.prisma
-- [ ] T032 [P] Define Chat and Message models in server/prisma/schema.prisma
-- [ ] T033 Generate Prisma client and create initial migration at server/prisma/
+- [x] T025 Initialize Prisma with PostgreSQL configuration at server/prisma/schema.prisma
+- [x] T026 Define User model with role field in server/prisma/schema.prisma
+- [x] T027 [P] Define Profile model (student identity) in server/prisma/schema.prisma
+- [x] T028 [P] Define Internship model in server/prisma/schema.prisma
+- [x] T029 [P] Define Project model in server/prisma/schema.prisma
+- [x] T030 [P] Define Application model with state machine field in server/prisma/schema.prisma
+- [x] T031 [P] Define Match model in server/prisma/schema.prisma
+- [x] T032 [P] Define Chat and Message models in server/prisma/schema.prisma
+- [x] T033 Generate Prisma client and create initial migration at server/prisma/
 
 ### Backend Core Infrastructure
 
-- [ ] T034 Setup Express/Fastify server with middleware at server/src/index.ts
-- [ ] T035 [P] Implement authentication middleware at server/src/api/middleware/auth.ts
-- [ ] T036 [P] Implement role-based access middleware at server/src/api/middleware/role-guard.ts
-- [ ] T037 [P] Implement error handling middleware (explain, suggest recovery) at server/src/api/middleware/error-handler.ts
-- [ ] T038 Setup API router structure at server/src/api/routes/index.ts
+- [x] T034 Setup Express/Fastify server with middleware at server/src/index.ts
+- [x] T035 [P] Implement authentication middleware at server/src/api/middleware/auth.ts
+- [x] T036 [P] Implement role-based access middleware at server/src/api/middleware/role-guard.ts
+- [x] T037 [P] Implement error handling middleware (explain, suggest recovery) at server/src/api/middleware/error-handler.ts
+- [x] T038 Setup API router structure at server/src/api/routes/index.ts
 
 ### Frontend Core Infrastructure
 
-- [ ] T039 Initialize React app with Vite at app/
-- [ ] T040 [P] Configure React Router with role-based routing at app/src/router/index.tsx
-- [ ] T041 [P] Create auth context and hooks at app/src/contexts/AuthContext.tsx
-- [ ] T042 [P] Create API client service at app/src/services/api.ts
-- [ ] T043 Setup state management (Zustand or similar) at app/src/stores/index.ts
+- [x] T039 Initialize React app with Vite at app/
+- [x] T040 [P] Configure React Router with role-based routing at app/src/router/index.tsx
+- [x] T041 [P] Create auth context and hooks at app/src/contexts/AuthContext.tsx
+- [x] T042 [P] Create API client service at app/src/services/api.ts
+- [x] T043 Setup state management (Zustand or similar) at app/src/stores/index.ts
 
 ### Card Rendering Engine
 
-- [ ] T044 Build generic CardRenderer component with summary/expanded states at app/src/components/cards/CardRenderer.tsx
-- [ ] T045 [P] Implement expand/collapse animation (motion tokens) at app/src/components/cards/CardAnimations.tsx
-- [ ] T046 [P] Create CardActions slot component at app/src/components/cards/CardActions.tsx
+- [x] T044 Build generic CardRenderer component with summary/expanded states at app/src/components/cards/CardRenderer.tsx
+- [x] T045 [P] Implement expand/collapse animation (motion tokens) at app/src/components/cards/CardAnimations.tsx
+- [x] T046 [P] Create CardActions slot component at app/src/components/cards/CardActions.tsx
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -111,41 +111,41 @@
 
 ### Authentication (Student Path)
 
-- [ ] T047 [US1] Implement magic link authentication flow at server/src/services/auth/magic-link.ts
-- [ ] T048 [US1] Create login page at app/src/pages/auth/Login.tsx
-- [ ] T049 [US1] Create magic link verification page at app/src/pages/auth/Verify.tsx
-- [ ] T050 [US1] Implement student onboarding role selection at app/src/pages/auth/Onboarding.tsx
+- [x] T047 [US1] Implement magic link authentication flow at server/src/services/auth/magic-link.ts
+- [x] T048 [US1] Create login page at app/src/pages/auth/Login.tsx
+- [x] T049 [US1] Create magic link verification page at app/src/pages/auth/Verify.tsx
+- [x] T050 [US1] Implement student onboarding role selection at app/src/pages/auth/Onboarding.tsx
 
 ### Profile Builder
 
-- [ ] T051 [US1] Create ProfileCard component (summary view) at app/src/components/cards/ProfileCard.tsx
-- [ ] T052 [US1] Create ProfileCard expanded view at app/src/components/cards/ProfileCardExpanded.tsx
-- [ ] T053 [US1] Build profile builder wizard container at app/src/pages/student/ProfileBuilder.tsx
-- [ ] T054 [P] [US1] Create identity snapshot block (name, photo, headline) at app/src/components/profile/IdentityBlock.tsx
-- [ ] T055 [P] [US1] Create role intent block (what they're seeking) at app/src/components/profile/RoleIntentBlock.tsx
-- [ ] T056 [P] [US1] Create availability block at app/src/components/profile/AvailabilityBlock.tsx
-- [ ] T057 [P] [US1] Create skills block with proof linking at app/src/components/profile/SkillsBlock.tsx
-- [ ] T058 [P] [US1] Create projects reference block at app/src/components/profile/ProjectsBlock.tsx
-- [ ] T059 [US1] Implement profile strength indicator at app/src/components/profile/ProfileStrength.tsx
-- [ ] T060 [US1] Implement proof guidance (scaffold, don't shame) at app/src/components/profile/ProofGuidance.tsx
+- [x] T051 [US1] Create ProfileCard component (summary view) at app/src/components/cards/ProfileCard.tsx
+- [x] T052 [US1] Create ProfileCard expanded view at app/src/components/cards/ProfileCardExpanded.tsx
+- [x] T053 [US1] Build profile builder wizard container at app/src/pages/student/ProfileBuilder.tsx
+- [x] T054 [P] [US1] Create identity snapshot block (name, photo, headline) at app/src/components/profile/IdentityBlock.tsx
+- [x] T055 [P] [US1] Create role intent block (what they're seeking) at app/src/components/profile/RoleIntentBlock.tsx
+- [x] T056 [P] [US1] Create availability block at app/src/components/profile/AvailabilityBlock.tsx
+- [x] T057 [P] [US1] Create skills block with proof linking at app/src/components/profile/SkillsBlock.tsx
+- [x] T058 [P] [US1] Create projects reference block at app/src/components/profile/ProjectsBlock.tsx
+- [x] T059 [US1] Implement profile strength indicator at app/src/components/profile/ProfileStrength.tsx
+- [x] T060 [US1] Implement proof guidance (scaffold, don't shame) at app/src/components/profile/ProofGuidance.tsx
 
 ### Project Cards (Skill Proof)
 
-- [ ] T061 [US1] Create ProjectCard component at app/src/components/cards/ProjectCard.tsx
-- [ ] T062 [US1] Create project creation modal at app/src/components/profile/ProjectModal.tsx
+- [x] T061 [US1] Create ProjectCard component at app/src/components/cards/ProjectCard.tsx
+- [x] T062 [US1] Create project creation modal at app/src/components/profile/ProjectModal.tsx
 
 ### Backend Profile API
 
-- [ ] T063 [US1] Implement profile service at server/src/services/profile.ts
-- [ ] T064 [US1] Create profile routes (CRUD) at server/src/api/routes/profile.ts
-- [ ] T065 [US1] Create project routes (CRUD) at server/src/api/routes/project.ts
+- [x] T063 [US1] Implement profile service at server/src/services/profile.ts
+- [x] T064 [US1] Create profile routes (CRUD) at server/src/api/routes/profile.ts
+- [x] T065 [US1] Create project routes (CRUD) at server/src/api/routes/project.ts
 
 ### Resume Import
 
-- [ ] T066 [US1] Implement resume upload endpoint at server/src/api/routes/resume.ts
-- [ ] T067 [US1] Implement resume parser service (structured extraction) at server/src/services/resume-parser.ts
-- [ ] T068 [US1] Create resume upload component at app/src/components/profile/ResumeUpload.tsx
-- [ ] T069 [US1] Create verification step UI (must confirm before save) at app/src/components/profile/ResumeVerification.tsx
+- [x] T066 [US1] Implement resume upload endpoint at server/src/api/routes/resume.ts
+- [x] T067 [US1] Implement resume parser service (structured extraction) at server/src/services/resume-parser.ts
+- [x] T068 [US1] Create resume upload component at app/src/components/profile/ResumeUpload.tsx
+- [x] T069 [US1] Create verification step UI (must confirm before save) at app/src/components/profile/ResumeVerification.tsx
 
 **Checkpoint**: User Story 1 complete - Students can create profiles with proof-linked skills
 
@@ -159,30 +159,30 @@
 
 ### Authentication (Recruiter Path)
 
-- [ ] T070 [US2] Implement recruiter onboarding flow at app/src/pages/auth/RecruiterOnboarding.tsx
-- [ ] T071 [US2] Create recruiter dashboard shell at app/src/pages/recruiter/Dashboard.tsx
+- [x] T070 [US2] Implement recruiter onboarding flow at app/src/pages/auth/RecruiterOnboarding.tsx
+- [x] T071 [US2] Create recruiter dashboard shell at app/src/pages/recruiter/Dashboard.tsx
 
 ### Internship Card
 
-- [ ] T072 [US2] Create InternshipCard component (summary view) at app/src/components/cards/InternshipCard.tsx
-- [ ] T073 [US2] Create InternshipCard expanded view at app/src/components/cards/InternshipCardExpanded.tsx
+- [x] T072 [US2] Create InternshipCard component (summary view) at app/src/components/cards/InternshipCard.tsx
+- [x] T073 [US2] Create InternshipCard expanded view at app/src/components/cards/InternshipCardExpanded.tsx
 
 ### Internship Editor
 
-- [ ] T074 [US2] Build internship editor container at app/src/pages/recruiter/InternshipEditor.tsx
-- [ ] T075 [P] [US2] Create role clarity block at app/src/components/internship/RoleClarityBlock.tsx
-- [ ] T076 [P] [US2] Create company context block at app/src/components/internship/CompanyContextBlock.tsx
-- [ ] T077 [P] [US2] Create learning outcomes block at app/src/components/internship/LearningOutcomesBlock.tsx
-- [ ] T078 [P] [US2] Create practical expectations block at app/src/components/internship/ExpectationsBlock.tsx
-- [ ] T079 [P] [US2] Create duration and compensation block at app/src/components/internship/CompensationBlock.tsx
-- [ ] T080 [US2] Implement buzzword detection and clarification prompts at app/src/components/internship/QualityValidator.tsx
-- [ ] T081 [US2] Create preview mode before publish at app/src/components/internship/InternshipPreview.tsx
+- [x] T074 [US2] Build internship editor container at app/src/pages/recruiter/InternshipEditor.tsx
+- [x] T075 [P] [US2] Create role clarity block at app/src/components/internship/RoleClarityBlock.tsx
+- [x] T076 [P] [US2] Create company context block at app/src/components/internship/CompanyContextBlock.tsx
+- [x] T077 [P] [US2] Create learning outcomes block at app/src/components/internship/LearningOutcomesBlock.tsx
+- [x] T078 [P] [US2] Create practical expectations block at app/src/components/internship/ExpectationsBlock.tsx
+- [x] T079 [P] [US2] Create duration and compensation block at app/src/components/internship/CompensationBlock.tsx
+- [x] T080 [US2] Implement buzzword detection and clarification prompts at app/src/components/internship/QualityValidator.tsx
+- [x] T081 [US2] Create preview mode before publish at app/src/components/internship/InternshipPreview.tsx
 
 ### Backend Internship API
 
-- [ ] T082 [US2] Implement internship service at server/src/services/internship.ts
-- [ ] T083 [US2] Create internship routes (CRUD) at server/src/api/routes/internship.ts
-- [ ] T084 [US2] Implement content quality validation at server/src/services/content-validator.ts
+- [x] T082 [US2] Implement internship service at server/src/services/internship.ts
+- [x] T083 [US2] Create internship routes (CRUD) at server/src/api/routes/internship.ts
+- [x] T084 [US2] Implement content quality validation at server/src/services/content-validator.ts
 
 **Checkpoint**: User Story 2 complete - Recruiters can post quality internships
 
@@ -275,20 +275,20 @@
 
 ### Match Detection
 
-- [ ] T113 [US6] Implement match detection service at server/src/services/matching/match-detector.ts
-- [ ] T114 [US6] Create match event emitter at server/src/services/matching/match-events.ts
-- [ ] T115 [US6] Create match routes at server/src/api/routes/match.ts
+- [x] T113 [US6] Implement match detection service at server/src/services/matching/match-detector.ts
+- [x] T114 [US6] Create match event emitter at server/src/services/matching/match-events.ts
+- [x] T115 [US6] Create match routes at server/src/api/routes/match.ts
 
 ### Chat System
 
-- [ ] T116 [US6] Implement chat service at server/src/services/chat/chat.ts
-- [ ] T117 [US6] Create chat routes at server/src/api/routes/chat.ts
-- [ ] T118 [US6] Setup WebSocket for real-time messaging at server/src/services/chat/websocket.ts
-- [ ] T119 [US6] Build chat container component at app/src/components/chat/ChatContainer.tsx
-- [ ] T120 [US6] Create message input with structured prompts at app/src/components/chat/MessageInput.tsx
-- [ ] T121 [US6] Create message list component at app/src/components/chat/MessageList.tsx
-- [ ] T122 [US6] Implement chat unlock indicator at app/src/components/chat/ChatUnlockStatus.tsx
-- [ ] T123 [US6] Implement silence status display at app/src/components/chat/SilenceIndicator.tsx
+- [x] T116 [US6] Implement chat service at server/src/services/chat/chat.ts
+- [x] T117 [US6] Create chat routes at server/src/api/routes/chat.ts
+- [x] T118 [US6] Setup WebSocket for real-time messaging at server/src/services/chat/websocket.ts
+- [x] T119 [US6] Build chat container component at app/src/components/chat/ChatContainer.tsx
+- [x] T120 [US6] Create message input with structured prompts at app/src/components/chat/MessageInput.tsx
+- [x] T121 [US6] Create message list component at app/src/components/chat/MessageList.tsx
+- [x] T122 [US6] Implement chat unlock indicator at app/src/components/chat/ChatUnlockStatus.tsx
+- [x] T123 [US6] Implement silence status display at app/src/components/chat/SilenceIndicator.tsx
 
 **Checkpoint**: User Story 6 complete - Matched parties can communicate
 
@@ -302,18 +302,18 @@
 
 ### Pipeline View
 
-- [ ] T124 [US7] Build pipeline page at app/src/pages/recruiter/Pipeline.tsx
-- [ ] T125 [US7] Create pipeline column component at app/src/components/pipeline/PipelineColumn.tsx
-- [ ] T126 [US7] Create pipeline card component at app/src/components/pipeline/PipelineCard.tsx
-- [ ] T127 [US7] Implement drag-and-drop state transitions at app/src/hooks/usePipelineDragDrop.ts
-- [ ] T128 [US7] Create stale candidate highlight at app/src/components/pipeline/StaleHighlight.tsx
-- [ ] T129 [US7] Implement decision enforcement modal at app/src/components/pipeline/DecisionModal.tsx
+- [x] T124 [US7] Build pipeline page at app/src/pages/recruiter/Pipeline.tsx
+- [x] T125 [US7] Create pipeline column component at app/src/components/pipeline/PipelineColumn.tsx
+- [x] T126 [US7] Create pipeline card component at app/src/components/pipeline/PipelineCard.tsx
+- [x] T127 [US7] Implement drag-and-drop state transitions at app/src/hooks/usePipelineDragDrop.ts
+- [x] T128 [US7] Create stale candidate highlight at app/src/components/pipeline/StaleHighlight.tsx
+- [x] T129 [US7] Implement decision enforcement modal at app/src/components/pipeline/DecisionModal.tsx
 
 ### Backend Pipeline API
 
-- [ ] T130 [US7] Implement pipeline service at server/src/services/pipeline.ts
-- [ ] T131 [US7] Create pipeline routes at server/src/api/routes/pipeline.ts
-- [ ] T132 [US7] Implement loop closure notifications at server/src/services/notifications/loop-closure.ts
+- [x] T130 [US7] Implement pipeline service at server/src/services/pipeline.ts
+- [x] T131 [US7] Create pipeline routes at server/src/api/routes/pipeline.ts
+- [x] T132 [US7] Implement loop closure notifications at server/src/services/notifications/loop-closure.ts
 
 **Checkpoint**: User Story 7 complete - No candidate left in limbo
 

@@ -1,5 +1,6 @@
 import { prisma } from '../db/client.js';
 import { ApplicationState } from '../generated/prisma/index.js';
+import { matchDetector } from './matching/match-detector.js';
 
 export class ShortlistService {
   /**
@@ -16,10 +17,12 @@ export class ShortlistService {
       }
     });
 
+    let application;
+
     if (existingApplication) {
       // Update state if not already further along
       // TODO: Add state machine logic validation
-      return prisma.application.update({
+      application = await prisma.application.update({
         where: { id: existingApplication.id },
         data: {
           currentState: ApplicationState.SHORTLISTED,
@@ -44,7 +47,7 @@ export class ShortlistService {
         throw new Error('Student profile not found');
       }
 
-      return prisma.application.create({
+      application = await prisma.application.create({
         data: {
           studentId,
           profileId: profile.id,
@@ -62,6 +65,11 @@ export class ShortlistService {
         }
       });
     }
+
+    // Process match detection
+    await matchDetector.processRecruiterInterest(recruiterId, internshipId, studentId);
+
+    return application;
   }
 
   /**

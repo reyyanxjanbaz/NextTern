@@ -115,6 +115,12 @@ export {
   STATE_STALE_THRESHOLDS,
 } from './status-card';
 
+// === Chat ===
+export {
+  type Message,
+  type Chat,
+} from './chat';
+
 // === Utility Types ===
 
 /**
