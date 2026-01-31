@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, ChevronUp, Clock, Building, Briefcase } from 'lucide-react';
+import { ChevronDown, ChevronUp, Clock, Building } from 'lucide-react';
 import { StatusCard as StatusCardType } from '../../../../shared/types/status-card';
 import { APPLICATION_STATE_META } from '../../../../shared/types/application-state';
 import { NextOutcomes } from '../status/NextOutcomes';

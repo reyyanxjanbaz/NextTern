@@ -1,6 +1,9 @@
 import React from 'react';
 import { InternshipCard, InternshipCardExpanded as InternshipCardExpandedType } from '../../../../shared/types/internship-card';
-import { CheckCircle, XCircle, HelpCircle } from 'lucide-react';
+import RoleClaritySection from '../internship/RoleClarityBlock';
+import CompanyContextSection from '../internship/CompanyContextBlock';
+import LearningOutcomesSection from '../internship/LearningOutcomesBlock';
+import ExpectationsSection from '../internship/ExpectationsBlock';
 
 interface InternshipCardExpandedProps {
   section: {
@@ -20,13 +23,13 @@ export const InternshipCardExpanded: React.FC<InternshipCardExpandedProps> = ({
 
   switch (section.id) {
     case 'role-clarity':
-      return <RoleClaritySection role={expanded.role} />;
+      return <RoleClaritySection data={expanded.role} onChange={() => {}} />;
     case 'company-context':
-      return <CompanyContextSection company={expanded.company} />;
+      return <CompanyContextSection data={expanded.company} onChange={() => {}} />;
     case 'learning-outcomes':
-      return <LearningOutcomesSection learning={expanded.learning} />;
+      return <LearningOutcomesSection data={expanded.learning} onChange={() => {}} />;
     case 'expectations':
-      return <ExpectationsSection expectations={expanded.expectations} />;
+      return <ExpectationsSection data={expanded.expectations} onChange={() => {}} />;
     case 'compensation':
       return <CompensationSection data={section.content} />;
     default:

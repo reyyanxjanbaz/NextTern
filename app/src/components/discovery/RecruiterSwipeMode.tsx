@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Heart } from 'lucide-react';
 import { ProfileCard as ProfileCardType } from '../../../../shared/types/profile-card';
-import ProfileCard from '../cards/ProfileCard';
+import { ProfileCard } from '../cards/ProfileCard';
 import { useSwipeGesture } from '../../hooks/useSwipeGesture';
 import SwipeFeedback from './SwipeFeedback';
 import { api } from '../../services/api';
@@ -103,15 +103,15 @@ export const RecruiterSwipeMode: React.FC = () => {
               dragElastic={0.7}
               onDrag={isTop ? onDrag : undefined}
               onDragEnd={isTop ? onDragEnd : undefined}
-              // @ts-ignore
+              // @ts-expect-error - Framer motion type mismatch
               animate={isTop ? controls : undefined}
               className="cursor-grab active:cursor-grabbing"
             >
               {isTop && <SwipeFeedback direction={direction} />}
               <div className="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-200">
                 <ProfileCard 
-                  card={card} 
-                  isExpanded={true}
+                  profile={card} 
+                  defaultExpanded={true}
                   onAction={() => {}}
                 />
               </div>

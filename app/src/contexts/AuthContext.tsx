@@ -3,18 +3,21 @@ import { User, UserRole } from '@shared/types/user';
 
 interface AuthContextType {
   user: User | null;
+  token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (email: string) => Promise<void>;
+  login: (user: User, token: string) => Promise<void>;
   verify: (token: string) => Promise<void>;
   logout: () => Promise<void>;
   hasRole: (role: UserRole) => boolean;
+  updateProfile: (data: Partial<User>) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -34,9 +37,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     checkSession();
   }, []);
 
-  const login = async (email: string) => {
-    // TODO: Implement magic link request
-    console.log('Login requested for', email);
+  const login = async (userData: User, authToken: string) => {
+    setUser(userData);
+    setToken(authToken);
+    // Persist to local storage
+    localStorage.setItem('token', authToken);
+  };
+
+  const updateProfile = async (data: Partial<User>) => {
+    if (!user) return;
+    setUser({ ...user, ...data } as User);
   };
 
   const verify = async (token: string) => {
@@ -57,12 +67,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     <AuthContext.Provider
       value={{
         user,
+        token,
         isAuthenticated: !!user,
         isLoading,
         login,
         verify,
         logout,
         hasRole,
+        updateProfile,
       }}
     >
       {children}

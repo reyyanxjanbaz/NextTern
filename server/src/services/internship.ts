@@ -1,6 +1,5 @@
-import { PrismaClient, Internship, Prisma } from '@prisma/client';
-import { InternshipCard, InternshipCardExpanded } from '../../../shared/types/internship-card';
-import { CardState } from '../../../shared/types/card';
+import { PrismaClient, Internship, Prisma } from '../generated/prisma/index.js';
+import { InternshipCardExpanded } from '../../../shared/types/internship-card.js';
 
 const prisma = new PrismaClient();
 

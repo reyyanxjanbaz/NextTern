@@ -9,11 +9,14 @@ interface InternshipPreviewProps {
 export default function InternshipPreview({ data }: InternshipPreviewProps) {
   // Construct a valid card object from partial data for preview
   const previewCard: InternshipCardType = {
+    state: 'open' as any,
+    actions: [],
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    ownerId: 'preview',
     id: 'preview',
     type: 'internship',
     summary: {
-      id: 'preview',
-      type: 'internship',
       title: data.expanded?.role.title || 'Untitled Internship',
       headline: data.expanded?.role.title || 'Untitled Internship',
       subheadline: data.expanded?.company.name || 'Company Name',

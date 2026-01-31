@@ -18,7 +18,6 @@ export const ApplicationFlow: React.FC<ApplicationFlowProps> = ({ currentState }
   ];
 
   const currentIndex = flowSteps.indexOf(currentState);
-  const isClosed = currentState === ApplicationState.CLOSED;
 
   return (
     <div className="w-full overflow-x-auto py-4">

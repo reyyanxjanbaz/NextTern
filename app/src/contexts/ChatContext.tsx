@@ -33,7 +33,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const response = await api.get('/matches');
       // Filter for matches that have a chat initiated
-      const matchesWithChat = response.data.filter((m: any) => m.chat);
+      const matchesWithChat = (response as any).data.filter((m: any) => m.chat);
       const chatList = matchesWithChat.map((m: any) => ({
         ...m.chat,
         match: m
@@ -61,7 +61,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setIsLoadingMessages(true);
       try {
         const response = await api.get(`/chat/${activeChat.id}/messages`);
-        setMessages(response.data);
+        setMessages((response as any).data);
         // Mark as read
         await api.post(`/chat/${activeChat.id}/read`);
       } catch (error) {
@@ -138,7 +138,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     try {
       const response = await api.post(`/chat/${activeChat.id}/messages`, { content });
-      const message = response.data;
+      const message = (response as any).data;
       setMessages(prev => [...prev, message]);
       
       // Update chat list

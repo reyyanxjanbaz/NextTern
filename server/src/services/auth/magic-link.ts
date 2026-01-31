@@ -38,7 +38,7 @@ export const magicLinkService = {
         throw new Error('Invalid token type');
       }
       return decoded;
-    } catch (error) {
+    } catch {
       throw new Error('Invalid or expired magic link');
     }
   },

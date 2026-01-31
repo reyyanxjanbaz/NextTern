@@ -1,6 +1,6 @@
 import React from 'react';
 import { InternshipCard as InternshipCardType, INTERNSHIP_CARD_ACTIONS } from '../../../../shared/types/internship-card';
-import CardRenderer from './CardRenderer';
+import { CardRenderer } from './CardRenderer';
 import { InternshipCardExpanded } from './InternshipCardExpanded';
 import { Briefcase, MapPin, Clock, DollarSign } from 'lucide-react';
 import { WhyThisMatch } from './WhyThisMatch';
@@ -15,7 +15,7 @@ interface InternshipCardProps {
 export default function InternshipCard({
   card,
   isExpanded = false,
-  onToggleExpand,
+  onToggleExpand: _onToggleExpand,
   onAction,
 }: InternshipCardProps) {
   const { summary, expanded } = card;
@@ -37,10 +37,10 @@ export default function InternshipCard({
     },
   };
 
+
   const renderSummary = () => (
     <div className="flex flex-col space-y-4">
-      <div className="flex items-start justify-between">
-        <div className="flex items-center space-x-3">
+    <div className="flex items-center space-x-3">
           {summary.company.logoUrl ? (
             <img
               src={summary.company.logoUrl}
@@ -58,7 +58,6 @@ export default function InternshipCard({
           </div>
         </div>
         <WhyThisMatch internshipId={card.id} />
-      </div>
 
       <div className="grid grid-cols-2 gap-3 text-sm text-gray-600">
         <div className="flex items-center space-x-2">
@@ -83,10 +82,9 @@ export default function InternshipCard({
 
   return (
     <CardRenderer
-      card={card}
-      isExpanded={isExpanded}
-      onToggleExpand={onToggleExpand}
-      onAction={onAction}
+      card={cardWithSections}
+      defaultExpanded={isExpanded}
+      onAction={(action) => onAction?.(action.id)}
       renderSummary={renderSummary}
       renderSection={(section) => (
         <InternshipCardExpanded section={section} card={card} />

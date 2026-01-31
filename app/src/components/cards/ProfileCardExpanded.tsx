@@ -1,5 +1,5 @@
 import React from 'react';
-import { ProfileCard, Skill, SkillProof } from '@shared/types/profile-card';
+import { ProfileCard } from '@shared/types/profile-card';
 import { cn } from '../../utils/cn';
 
 interface ProfileCardExpandedProps {

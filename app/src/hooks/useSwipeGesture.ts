@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
-import { PanInfo, useAnimation, AnimationControls } from 'framer-motion';
+import { useState } from 'react';
+import { PanInfo, useAnimation } from 'framer-motion';
 
 interface SwipeOptions {
   onSwipeLeft: () => void;

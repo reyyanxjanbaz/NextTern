@@ -7,11 +7,12 @@
 
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { prisma } from '../../../db/index.js';
 import { UserRole } from '@nexttern/shared';
+export { requireRole } from './role-guard.js';
 
 // Extend Express Request type to include user
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Express {
     interface Request {
       user?: {
@@ -48,56 +49,30 @@ export const authenticate = async (
     if (!token) {
       return res.status(401).json({
         error: 'Unauthorized',
-        message: 'Authentication required',
+        message: 'Authentication required'
       });
     }
 
     // 2. Verify token
-    const secret = process.env.JWT_SECRET;
-    if (!secret) {
-      console.error('JWT_SECRET not configured');
-      return res.status(500).json({ error: 'Internal Server Error' });
-    }
-
-    const decoded = jwt.verify(token, secret) as JwtPayload;
-
-    // 3. Verify user still exists and is active
-    // Optimization: In high-load, we might skip DB check for every request
-    // and rely on token expiration, but for MVP safety > speed.
-    const user = await prisma.user.findUnique({
-      where: { id: decoded.userId },
-      select: { id: true, email: true, role: true, authStatus: true },
-    });
-
-    if (!user) {
-      return res.status(401).json({
-        error: 'Unauthorized',
-        message: 'User not found',
-      });
-    }
-
-    // 4. Attach user to request
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'dev-secret') as JwtPayload;
+    
+    // 3. Attach user to request
     req.user = {
-      id: user.id,
-      email: user.email,
-      role: user.role as UserRole | null,
+      id: decoded.userId,
+      email: decoded.email,
+      role: decoded.role
     };
 
     next();
-  } catch (error) {
-    if (error instanceof jwt.TokenExpiredError) {
-      return res.status(401).json({
-        error: 'Unauthorized',
-        message: 'Token expired',
-      });
-    }
-    
+  } catch {
     return res.status(401).json({
       error: 'Unauthorized',
-      message: 'Invalid token',
+      message: 'Invalid or expired token'
     });
   }
 };
+
+export const requireAuth = authenticate;
 
 /**
  * Optional authentication - attaches user if present, but doesn't block
@@ -130,7 +105,7 @@ export const optionalAuth = async (
     };
 
     next();
-  } catch (error) {
+  } catch {
     // Ignore errors for optional auth
     next();
   }

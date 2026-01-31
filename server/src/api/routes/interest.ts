@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { UserRole } from '@nexttern/shared';
 import { interestService } from '../../services/interest.js';
 import { swipeLimiter } from '../../services/swipe-limiter.js';
 import { requireAuth, requireRole } from '../middleware/auth.js';
@@ -6,7 +7,7 @@ import { requireAuth, requireRole } from '../middleware/auth.js';
 const router = Router();
 
 // Record a swipe (interest or pass)
-router.post('/swipe', requireAuth, requireRole(['student']), async (req, res, next) => {
+router.post('/swipe', requireAuth, requireRole([UserRole.STUDENT]), async (req, res, next) => {
   try {
     const { internshipId, action } = req.body;
     
@@ -25,7 +26,7 @@ router.post('/swipe', requireAuth, requireRole(['student']), async (req, res, ne
 });
 
 // Get daily swipe limit status
-router.get('/limit', requireAuth, requireRole(['student']), async (req, res, next) => {
+router.get('/limit', requireAuth, requireRole([UserRole.STUDENT]), async (req, res, next) => {
   try {
     const status = await swipeLimiter.hasReachedLimit(req.user!.id);
     res.json(status);
@@ -35,7 +36,7 @@ router.get('/limit', requireAuth, requireRole(['student']), async (req, res, nex
 });
 
 // Get list of interested internships
-router.get('/interested', requireAuth, requireRole(['student']), async (req, res, next) => {
+router.get('/interested', requireAuth, requireRole([UserRole.STUDENT]), async (req, res, next) => {
   try {
     const interested = await interestService.getInterestedInternships(req.user!.id);
     res.json(interested);
@@ -45,7 +46,7 @@ router.get('/interested', requireAuth, requireRole(['student']), async (req, res
 });
 
 // Get discoverable internships
-router.get('/discover', requireAuth, requireRole(['student']), async (req, res, next) => {
+router.get('/discover', requireAuth, requireRole([UserRole.STUDENT]), async (req, res, next) => {
   try {
     const internships = await interestService.getDiscoverableInternships(req.user!.id);
     res.json(internships);

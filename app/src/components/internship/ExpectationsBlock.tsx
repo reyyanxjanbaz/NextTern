@@ -14,7 +14,6 @@ export default function ExpectationsBlock({ data, onChange }: ExpectationsBlockP
 
   const handleRequiredSkillChange = (index: number, field: 'skill' | 'level', value: string) => {
     const newSkills = [...data.requiredSkills];
-    // @ts-ignore
     newSkills[index] = { ...newSkills[index], [field]: value };
     handleChange('requiredSkills', newSkills);
   };

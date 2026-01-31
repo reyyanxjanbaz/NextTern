@@ -26,9 +26,9 @@ export const ChatWindow: React.FC = () => {
     ? activeChat.match.internship.recruiter 
     : activeChat.match.student;
   
-  const title = isStudent 
-    ? `${otherParty.firstName} ${otherParty.lastName} • ${activeChat.match.internship.title}`
-    : `${otherParty.firstName} ${otherParty.lastName} • ${activeChat.match.internship.title}`;
+  // const title = isStudent 
+  //   ? `${otherParty.firstName} ${otherParty.lastName} • ${activeChat.match.internship.title}`
+  //   : `${otherParty.firstName} ${otherParty.lastName} • ${activeChat.match.internship.title}`;
 
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,7 +37,7 @@ export const ChatWindow: React.FC = () => {
     try {
       await sendMessage(newMessage);
       setNewMessage('');
-    } catch (error) {
+    } catch {
       // Error handled in context
     }
   };

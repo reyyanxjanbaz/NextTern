@@ -14,7 +14,7 @@
  * - Required PDFs
  */
 
-import type { Card, CardSummary, CardExpanded, CardAction } from './card';
+import type { Card, CardSummary, CardExpanded, CardAction } from './card.js';
 
 /**
  * Skill with proof linking.

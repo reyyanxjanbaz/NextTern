@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
 interface SwipeLimitIndicatorProps {
   remaining: number;

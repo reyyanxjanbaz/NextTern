@@ -1,6 +1,6 @@
 import { prisma } from '../../db/client.js';
 import { matchEvents } from './match-events.js';
-import { ApplicationState } from '../../../../shared/types/application-state.js';
+import { ApplicationState } from '../../generated/prisma/index.js';
 
 export class MatchDetector {
   /**

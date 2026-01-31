@@ -452,7 +452,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/reyyan/Desktop/projects/NextTern/server/src/generated/prisma",
+      "value": "C:\\Users\\LENOVO\\Documents\\GitHub\\NextTern\\server\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -461,17 +461,16 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "darwin-arm64",
+        "value": "windows",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/reyyan/Desktop/projects/NextTern/server/prisma/schema.prisma",
+    "sourceFilePath": "C:\\Users\\LENOVO\\Documents\\GitHub\\NextTern\\server\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
-    "schemaEnvPath": "../../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../../../prisma",
   "clientVersion": "5.22.0",

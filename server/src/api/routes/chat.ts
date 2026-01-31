@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { chatService } from '../../services/chat/chat.js';
-import { AppError } from '../middleware/error.js';
+import { AppError } from '../middleware/error-handler.js';
 
 const router = Router();
 

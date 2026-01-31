@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { pipelineService } from '../../services/pipeline.js';
-import { AppError } from '../middleware/error.js';
+import { AppError } from '../middleware/error-handler.js';
 import { ApplicationState } from '../../../../shared/types/application-state.js';
 
 const router = Router();

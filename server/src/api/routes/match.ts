@@ -31,7 +31,7 @@ router.get('/', authenticate, async (req, res) => {
 
     let matches;
 
-    if (role === 'STUDENT') {
+    if ((role as string) === 'STUDENT') {
       const profile = await prisma.profile.findUnique({ where: { userId } });
       if (!profile) return res.status(404).json({ error: 'Profile not found' });
 
@@ -49,7 +49,7 @@ router.get('/', authenticate, async (req, res) => {
           chat: true
         }
       });
-    } else if (role === 'RECRUITER') {
+    } else if ((role as string) === 'RECRUITER') {
       // Find internships owned by recruiter
       const internships = await prisma.internship.findMany({
         where: { recruiterId: userId },

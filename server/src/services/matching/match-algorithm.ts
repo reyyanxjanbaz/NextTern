@@ -40,7 +40,7 @@ export class MatchAlgorithm {
     const skillResult = skillOverlapCalculator.calculate(
       student.profile.skills.map(s => ({
         name: s.name,
-        proficiency: s.proficiency,
+        proficiency: s.proficiency.toLowerCase() as any,
         hasProof: s.hasProof
       })),
       requiredSkills

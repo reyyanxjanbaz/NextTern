@@ -1,4 +1,4 @@
-import { TimeInState } from '../../../../shared/types/status-card';
+import { TimeInState } from '@shared/types/status-card';
 
 /**
  * Calculate time in state.

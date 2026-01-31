@@ -1,7 +1,7 @@
-import { ProfileCard } from '@shared/types/profile-card';
+import type { ProfileCard } from '@nexttern/shared';
 
 export const resumeParserService = {
-  async parseResume(fileBuffer: Buffer): Promise<Partial<ProfileCard['expanded']>> {
+  async parseResume(_fileBuffer: Buffer): Promise<Partial<ProfileCard['expanded']>> {
     // In a real implementation, this would:
     // 1. Extract text from PDF/DOCX
     // 2. Send text to an LLM or parser to extract structured data

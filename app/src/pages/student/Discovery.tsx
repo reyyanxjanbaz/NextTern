@@ -15,7 +15,7 @@ export default function Discovery() {
     try {
       setLoading(true);
       const res = await api.get('/interest/discover');
-      setCards(res.data);
+      setCards((res as any).data);
     } catch (error) {
       console.error('Failed to load internships', error);
     } finally {

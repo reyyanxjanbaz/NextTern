@@ -1,7 +1,6 @@
 import { prisma } from '../db/client.js';
 import { ApplicationState, ClosureReason } from '../generated/prisma/index.js';
 import { swipeLimiter } from './swipe-limiter.js';
-import { matchDetector } from './matching/match-detector.js';
 
 export class InterestService {
   /**

@@ -15,8 +15,8 @@
  * - Next possible outcomes
  */
 
-import type { Card, CardSummary, CardExpanded, CardAction } from './card';
-import { ApplicationState, ClosureReason, APPLICATION_STATE_META } from './application-state';
+import type { Card, CardSummary, CardExpanded, CardAction } from './card.js';
+import { ApplicationState, ClosureReason } from './application-state.js';
 
 /**
  * Time-in-state tracking.

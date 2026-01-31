@@ -1,5 +1,5 @@
 import { prisma } from '../../db/client.js';
-import { AppError } from '../../api/middleware/error.js';
+import { AppError } from '../../api/middleware/error-handler.js';
 import { webSocketService } from './websocket.js';
 
 export class ChatService {
@@ -13,7 +13,11 @@ export class ChatService {
       include: {
         match: {
           include: {
-            student: true,
+            profile: {
+              include: {
+                user: true
+              }
+            },
             internship: {
               include: {
                 recruiter: true
@@ -29,8 +33,8 @@ export class ChatService {
     }
 
     // Check if sender is part of the chat
-    const isStudent = chat.match.student.userId === senderId;
-    const isRecruiter = chat.match.internship.recruiter.userId === senderId;
+    const isStudent = chat.match.profile.user.id === senderId;
+    const isRecruiter = chat.match.internship.recruiter.id === senderId;
 
     if (!isStudent && !isRecruiter) {
       throw new AppError('Not authorized to send messages in this chat', 403);
@@ -41,8 +45,7 @@ export class ChatService {
       data: {
         chatId,
         senderId,
-        content,
-        read: false
+        content
       }
     });
 
@@ -55,8 +58,8 @@ export class ChatService {
     // Broadcast message via WebSocket
     if (webSocketService) {
       const recipientId = isStudent 
-        ? chat.match.internship.recruiter.userId 
-        : chat.match.student.userId;
+? chat.match.internship.recruiter.id
+        : chat.match.profile.user.id;
       
       webSocketService.sendToUser(recipientId, 'new_message', message);
       // Also send back to sender for confirmation/optimistic UI sync if needed
@@ -76,7 +79,11 @@ export class ChatService {
       include: {
         match: {
           include: {
-            student: true,
+            profile: {
+              include: {
+                user: true
+              }
+            },
             internship: {
               include: {
                 recruiter: true
@@ -91,8 +98,8 @@ export class ChatService {
       throw new AppError('Chat not found', 404);
     }
 
-    const isStudent = chat.match.student.userId === userId;
-    const isRecruiter = chat.match.internship.recruiter.userId === userId;
+    const isStudent = chat.match.profile.user.id === userId;
+    const isRecruiter = chat.match.internship.recruiter.id === userId;
 
     if (!isStudent && !isRecruiter) {
       throw new AppError('Not authorized to view this chat', 403);
@@ -112,10 +119,12 @@ export class ChatService {
   /**
    * Mark messages as read
    */
-  async markAsRead(chatId: string, userId: string) {
+  async markAsRead(_chatId: string, _userId: string) {
     // Update all messages in this chat sent by the OTHER person to read
     // We don't need to verify access strictly here because we only update messages NOT sent by userId
     
+    /* 
+    // Message read status not supported in current schema
     await prisma.message.updateMany({
       where: {
         chatId,
@@ -126,6 +135,7 @@ export class ChatService {
         read: true
       }
     });
+    */
   }
 }
 

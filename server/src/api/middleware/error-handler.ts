@@ -8,7 +8,7 @@
 
 import { Request, Response, NextFunction } from 'express';
 import { ZodError } from 'zod';
-import { Prisma } from '@prisma/client';
+import { Prisma } from '../../generated/prisma/index.js';
 
 /**
  * Standard API Error response structure
@@ -50,7 +50,7 @@ export const errorHandler = (
   err: Error,
   req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ) => {
   console.error(`[Error] ${req.method} ${req.path}:`, err);
 

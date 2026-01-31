@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ApplicationState } from '@nexttern/shared';
 import { formatDistanceToNow } from 'date-fns';
 
 interface PipelineCardProps {
