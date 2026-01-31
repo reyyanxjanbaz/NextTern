@@ -112,6 +112,11 @@ export interface DashboardStats {
   pendingReviews: number;
 }
 
+export interface NotificationBadges {
+  chat: number;
+  applications: number;
+}
+
 // ============================================================================
 // MOCK DATA
 // ============================================================================
@@ -740,6 +745,29 @@ class ApiService {
       return { status: 'ok', version: 'mock-v1' };
     }
     return this.request('/health');
+  }
+
+  // ==========================================================================
+  // NOTIFICATION BADGES
+  // ==========================================================================
+
+  async getNotificationBadges(): Promise<NotificationBadges> {
+    if (MOCK_MODE) {
+      await mockDelay();
+      // Calculate unread chat messages from mock conversations
+      const chatUnread = mockConversations.reduce((sum, conv) => sum + conv.unreadCount, 0);
+      // Count applications with recent updates (Interview, Offered, or new messages)
+      const isRecruiter = this.currentUser?.role === 'RECRUITER';
+      const apps = isRecruiter ? mockApplicationsRecruiter : mockApplicationsStudent;
+      const applicationsWithUpdates = apps.filter(
+        app => app.lastUpdate && (app.status === 'Interview' || app.status === 'Offered' || app.status === 'Reviewing')
+      ).length;
+      return {
+        chat: chatUnread,
+        applications: applicationsWithUpdates,
+      };
+    }
+    return this.request<NotificationBadges>('/notifications/badges');
   }
 }
 
