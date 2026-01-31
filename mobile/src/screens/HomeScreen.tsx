@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StatusBar } from 'react-native';
 import { styled } from 'nativewind';
-import { Layout, Search, CheckCircle, Clock, ArrowRight, UserCheck } from 'lucide-react-native';
+import { Layout, Search, CheckCircle, Clock, ArrowRight, Zap } from 'lucide-react-native';
+import { isMockMode } from '../services/api';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -16,6 +17,16 @@ export default function HomeScreen({ onNavigate }: HomeScreenProps) {
     <StyledView className="flex-1 bg-eggshell">
       <StatusBar barStyle="dark-content" />
       <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
+        {/* Mock Mode Banner */}
+        {isMockMode() && (
+          <StyledView className="bg-yellow-100 px-4 py-2 flex-row items-center justify-center">
+            <Zap color="#CA8A04" size={14} />
+            <StyledText className="text-yellow-700 text-xs font-medium ml-1">
+              Mock Mode - Testing without backend
+            </StyledText>
+          </StyledView>
+        )}
+        
         {/* Header */}
         <StyledView className="flex-row justify-between items-center px-6 py-4 mt-2">
           <StyledText className="text-2xl font-bold text-deepBlue">NextTern</StyledText>
