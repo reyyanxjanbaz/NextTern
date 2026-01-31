@@ -20,7 +20,7 @@ export {
   type CardExpanded,
   isCard,
   isCardOfType,
-} from './card';
+} from './card.js';
 
 // === Application State ===
 export {
@@ -32,7 +32,7 @@ export {
   isTerminalState,
   ClosureReason,
   CLOSURE_REASON_META,
-} from './application-state';
+} from './application-state.js';
 
 // === User & Auth ===
 export {
@@ -48,7 +48,7 @@ export {
   isRecruiterUser,
   type Session,
   type MagicLinkToken,
-} from './user';
+} from './user.js';
 
 // === ProfileCard ===
 export {
@@ -67,7 +67,7 @@ export {
   type IdentitySnapshot,
   type ProfileStrength,
   PROFILE_CARD_ACTIONS,
-} from './profile-card';
+} from './profile-card.js';
 
 // === InternshipCard ===
 export {
@@ -84,7 +84,7 @@ export {
   type InternshipDuration,
   INTERNSHIP_CARD_ACTIONS,
   INTERNSHIP_CARD_STUDENT_ACTIONS,
-} from './internship-card';
+} from './internship-card.js';
 
 // === ProjectCard ===
 export {
@@ -99,7 +99,7 @@ export {
   type ProjectFormData,
   PROJECT_CARD_ACTIONS,
   validateProjectCompleteness,
-} from './project-card';
+} from './project-card.js';
 
 // === StatusCard ===
 export {
@@ -113,13 +113,13 @@ export {
   calculateTimeInState,
   getNextOutcomes,
   STATE_STALE_THRESHOLDS,
-} from './status-card';
+} from './status-card.js';
 
 // === Chat ===
 export {
   type Message,
   type Chat,
-} from './chat';
+} from './chat.js';
 
 // === Utility Types ===
 
@@ -127,22 +127,22 @@ export {
  * All card types union.
  */
 export type AnyCard =
-  | import('./profile-card').ProfileCard
-  | import('./internship-card').InternshipCard
-  | import('./project-card').ProjectCard
-  | import('./status-card').StatusCard;
+  | import('./profile-card.js').ProfileCard
+  | import('./internship-card.js').InternshipCard
+  | import('./project-card.js').ProjectCard
+  | import('./status-card.js').StatusCard;
 
 /**
  * Card type to card interface mapping.
  */
 export interface CardTypeMap {
-  profile: import('./profile-card').ProfileCard;
-  internship: import('./internship-card').InternshipCard;
-  project: import('./project-card').ProjectCard;
-  status: import('./status-card').StatusCard;
+  profile: import('./profile-card.js').ProfileCard;
+  internship: import('./internship-card.js').InternshipCard;
+  project: import('./project-card.js').ProjectCard;
+  status: import('./status-card.js').StatusCard;
 }
 
 /**
  * Get card type from CardType literal.
  */
-export type CardOfType<T extends import('./card').CardType> = CardTypeMap[T];
+export type CardOfType<T extends import('./card.js').CardType> = CardTypeMap[T];

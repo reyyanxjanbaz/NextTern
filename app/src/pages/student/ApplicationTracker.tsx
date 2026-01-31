@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { StatusCard as StatusCardType } from '../../../../shared/types/status-card';
 import { StatusCard } from '../../components/cards/StatusCard';
 import { SilenceAlert } from '../../components/status/SilenceAlert';
-import { api } from '../../services/api';
 
 export const ApplicationTracker: React.FC = () => {
   const [applications, setApplications] = useState<StatusCardType[]>([]);

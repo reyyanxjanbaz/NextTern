@@ -7,18 +7,12 @@
 
 import { Router } from 'express';
 import { authenticate } from '../middleware/auth.js';
+import authRoutes from './auth.js';
 import shortlistRoutes from './shortlist.js';
 import interestRoutes from './interest.js';
 import matchRoutes from './match.js';
 import chatRoutes from './chat.js';
 import pipelineRoutes from './pipeline.js';
-
-// Import feature routers (placeholders for now)
-// import authRoutes from './auth.routes.js';
-// import userRoutes from './user.routes.js';
-// import studentRoutes from './student.routes.js';
-// import recruiterRoutes from './recruiter.routes.js';
-// import chatRoutes from './chat.routes.js';
 
 const router = Router();
 
@@ -31,8 +25,8 @@ router.get('/health', (req, res) => {
   res.json({ status: 'ok', version: 'v1' });
 });
 
-// Auth routes (login, register, magic link)
-// router.use('/auth', authRoutes);
+// Auth routes (login, register, magic link) - PUBLIC
+router.use('/auth', authRoutes);
 
 // =============================================================================
 // PROTECTED ROUTES (Global Auth Guard)

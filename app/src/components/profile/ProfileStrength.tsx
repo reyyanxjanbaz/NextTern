@@ -8,7 +8,6 @@ interface ProfileStrengthProps {
 export const ProfileStrength: React.FC<ProfileStrengthProps> = ({ profile }) => {
   const calculateStrength = () => {
     let score = 0;
-    const maxScore = 100;
     const suggestions: string[] = [];
 
     // Identity (20%)

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ProfileCard as ProfileCardType } from '../../../../shared/types/profile-card';
-import ProfileCard from '../cards/ProfileCard';
+import { ProfileCard } from '../cards/ProfileCard';
 import { FilterControls } from './FilterControls';
 import { ComparisonView } from './ComparisonView';
-import { api } from '../../services/api';
 
 export const ReviewMode: React.FC = () => {
   const [candidates, setCandidates] = useState<ProfileCardType[]>([]);
@@ -84,8 +83,8 @@ export const ReviewMode: React.FC = () => {
                   />
                 </div>
                 <ProfileCard 
-                  card={candidate} 
-                  isExpanded={false}
+                  profile={candidate} 
+                  defaultExpanded={false}
                   onAction={() => {}}
                 />
               </div>

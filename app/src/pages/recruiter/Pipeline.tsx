@@ -27,7 +27,7 @@ export const Pipeline: React.FC = () => {
   const fetchPipeline = async () => {
     try {
       const response = await api.get('/pipeline');
-      setPipeline(response.data);
+      setPipeline((response as any).data);
     } catch (error) {
       console.error('Failed to fetch pipeline:', error);
     } finally {

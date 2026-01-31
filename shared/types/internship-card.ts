@@ -11,7 +11,7 @@
  * - Hidden requirements
  */
 
-import type { Card, CardSummary, CardExpanded, CardAction } from './card';
+import type { Card, CardSummary, CardExpanded, CardAction } from './card.js';
 
 /**
  * Company context for the internship.

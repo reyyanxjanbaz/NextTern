@@ -12,6 +12,8 @@ interface CardRendererProps {
   className?: string;
   defaultExpanded?: boolean;
   renderSection?: (section: any) => React.ReactNode;
+  renderSummary?: () => React.ReactNode;
+  actions?: CardAction[];
 }
 
 export const CardRenderer: React.FC<CardRendererProps> = ({
@@ -20,6 +22,8 @@ export const CardRenderer: React.FC<CardRendererProps> = ({
   className,
   defaultExpanded = false,
   renderSection,
+  renderSummary,
+  actions,
 }) => {
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
 
@@ -49,7 +53,7 @@ export const CardRenderer: React.FC<CardRendererProps> = ({
     }
 
     if (visual.type === 'icon' && visual.fallback) {
-      // @ts-ignore
+      // @ts-expect-error - Icon fallback type mismatch
       const Icon = (Icons[visual.fallback as keyof typeof Icons] || Icons.Circle) as React.ElementType;
       return (
         <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
@@ -106,48 +110,52 @@ export const CardRenderer: React.FC<CardRendererProps> = ({
       onClick={handleToggle}
     >
       {/* Summary View */}
-      <div className="flex items-start gap-4">
-        {renderVisual()}
-        
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center justify-between gap-2">
-            <h3 className="text-lg font-semibold text-gray-900 truncate">
-              {card.summary.headline}
-            </h3>
-            {renderStatusIndicator()}
-          </div>
+      {renderSummary ? (
+        renderSummary()
+      ) : (
+        <div className="flex items-start gap-4">
+          {renderVisual()}
           
-          {card.summary.subheadline && (
-            <p className="text-sm text-gray-500 mt-1">
-              {card.summary.subheadline}
-            </p>
-          )}
-
-          {card.summary.metadata && card.summary.metadata.length > 0 && (
-            <div className="flex flex-wrap gap-x-4 gap-y-2 mt-3 text-sm text-gray-500">
-              {card.summary.metadata.map((meta, index) => (
-                <div key={index} className="flex items-center gap-1">
-                  {meta.icon && (() => {
-                    // @ts-ignore
-                    const Icon = Icons[meta.icon as keyof typeof Icons] as React.ElementType;
-                    return Icon ? <Icon className="w-4 h-4" /> : null;
-                  })()}
-                  <span className="font-medium text-gray-700">{meta.label}:</span>
-                  <span>{meta.value}</span>
-                </div>
-              ))}
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center justify-between gap-2">
+              <h3 className="text-lg font-semibold text-gray-900 truncate">
+                {card.summary.headline}
+              </h3>
+              {renderStatusIndicator()}
             </div>
-          )}
-        </div>
+            
+            {card.summary.subheadline && (
+              <p className="text-sm text-gray-500 mt-1">
+                {card.summary.subheadline}
+              </p>
+            )}
 
-        <div className="text-gray-400">
-          {isExpanded ? (
-            <Icons.ChevronUp className="w-5 h-5" />
-          ) : (
-            <Icons.ChevronDown className="w-5 h-5" />
-          )}
+            {card.summary.metadata && card.summary.metadata.length > 0 && (
+              <div className="flex flex-wrap gap-x-4 gap-y-2 mt-3 text-sm text-gray-500">
+                {card.summary.metadata.map((meta, index) => (
+                  <div key={index} className="flex items-center gap-1">
+                    {meta.icon && (() => {
+                      // @ts-expect-error - Icon lookup type mismatch
+                      const Icon = Icons[meta.icon as keyof typeof Icons] as React.ElementType;
+                      return Icon ? <Icon className="w-4 h-4" /> : null;
+                    })()}
+                    <span className="font-medium text-gray-700">{meta.label}:</span>
+                    <span>{meta.value}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="text-gray-400">
+            {isExpanded ? (
+              <Icons.ChevronUp className="w-5 h-5" />
+            ) : (
+              <Icons.ChevronDown className="w-5 h-5" />
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Expanded View */}
       <CardExpandTransition isExpanded={isExpanded}>
@@ -178,7 +186,7 @@ export const CardRenderer: React.FC<CardRendererProps> = ({
           ))}
 
           {/* Actions */}
-          <CardActions actions={card.actions} onAction={handleAction} />
+          <CardActions actions={actions || card.actions} onAction={handleAction} />
         </div>
       </CardExpandTransition>
     </motion.div>

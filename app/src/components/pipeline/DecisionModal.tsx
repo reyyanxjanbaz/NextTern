@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ApplicationState, ClosureReason, CLOSURE_REASON_META } from '@nexttern/shared';
+import { ClosureReason } from '@nexttern/shared';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface DecisionModalProps {

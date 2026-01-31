@@ -1,7 +1,6 @@
 import { WebSocketServer, WebSocket } from 'ws';
 import { Server } from 'http';
 import jwt from 'jsonwebtoken';
-import { prisma } from '../../db/client.js';
 
 interface AuthenticatedWebSocket extends WebSocket {
   userId: string;
@@ -47,7 +46,7 @@ export class WebSocketService {
         });
 
         // Handle messages (if needed for client-sent events via WS, though we use REST for sending)
-        authWs.on('message', (data) => {
+        authWs.on('message', (_data) => {
           // Handle incoming WS messages if necessary
         });
 
@@ -95,7 +94,7 @@ export class WebSocketService {
   /**
    * Send a message to a specific user
    */
-  public sendToUser(userId: string, type: string, payload: any) {
+  public sendToUser(userId: string, type: string, payload: unknown) {
     const userSockets = this.clients.get(userId);
     if (userSockets) {
       const message = JSON.stringify({ type, payload });
@@ -110,7 +109,7 @@ export class WebSocketService {
   /**
    * Broadcast a message to multiple users
    */
-  public broadcast(userIds: string[], type: string, payload: any) {
+  public broadcast(userIds: string[], type: string, payload: unknown) {
     userIds.forEach(userId => this.sendToUser(userId, type, payload));
   }
 }

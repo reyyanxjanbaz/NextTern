@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { motion } from 'framer-motion';
+import { UserRole } from '@shared/types/user';
 
 export default function RecruiterOnboarding() {
   const { user, updateProfile } = useAuth();
   const navigate = useNavigate();
-  const [step, setStep] = useState(1);
+  // const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     companyName: '',
     role: '',
@@ -25,8 +25,8 @@ export default function RecruiterOnboarding() {
     // For now, we just update the local user context and redirect
     await updateProfile({
       ...user,
-      name: formData.companyName, // Using company name as display name for now
-      role: 'recruiter',
+      // name: formData.companyName,
+      role: UserRole.RECRUITER,
     });
     navigate('/recruiter/dashboard');
   };

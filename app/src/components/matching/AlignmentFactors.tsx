@@ -1,5 +1,5 @@
 import React from 'react';
-import { Check, AlertCircle, Clock, Zap } from 'lucide-react';
+import { Check, Clock, Zap } from 'lucide-react';
 
 interface AlignmentFactorsProps {
   factors: {

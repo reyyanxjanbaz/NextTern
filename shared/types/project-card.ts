@@ -8,7 +8,7 @@
  * ProjectCard is the primary proof unit attached to ProfileCards.
  */
 
-import type { Card, CardSummary, CardExpanded, CardAction } from './card';
+import type { Card, CardSummary, CardExpanded, CardAction } from './card.js';
 
 /**
  * Project type/category.

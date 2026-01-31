@@ -1,7 +1,7 @@
 import { prisma } from '../db/client.js';
-import { ApplicationState, ClosureReason } from '../../../../shared/types/application-state.js';
+import { ApplicationState, ClosureReason } from '../generated/prisma/index.js';
 import { applicationStateMachine } from './state/application-state-machine.js';
-import { AppError } from '../../api/middleware/error.js';
+import { AppError } from '../api/middleware/error-handler.js';
 
 export class PipelineService {
   /**
@@ -24,18 +24,13 @@ export class PipelineService {
       where,
       include: {
         student: {
-          include: {
-            user: {
-              select: {
-                firstName: true,
-                lastName: true,
-                avatarUrl: true
-              }
-            },
+          select: {
+            email: true,
             profile: {
               select: {
+                name: true,
+                photoUrl: true,
                 headline: true,
-                location: true,
                 skills: {
                   take: 3,
                   select: {
@@ -109,10 +104,10 @@ export class PipelineService {
     // Perform transition
     return await applicationStateMachine.transition(
       applicationId,
-      newState,
+      newState as any,
       recruiterId, // Actor ID (recruiter's user ID)
       note,
-      reason
+      reason as any
     );
   }
 }

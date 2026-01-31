@@ -5,11 +5,11 @@
  * Handles connection pooling and prevents multiple instances in development.
  */
 
-import { PrismaClient } from './generated/prisma/index.js';
+import { PrismaClient } from '../generated/prisma/index.js';
 
 // Declare global type for development hot-reload
 declare global {
-  // eslint-disable-next-line no-var
+   
   var __prisma: PrismaClient | undefined;
 }
 

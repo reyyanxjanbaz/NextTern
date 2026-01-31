@@ -184,11 +184,11 @@ export function isTerminalState(state: ApplicationState): boolean {
  * Closure reason for closed applications.
  */
 export enum ClosureReason {
-  ACCEPTED = 'accepted', // Student accepted offer
-  REJECTED = 'rejected', // Recruiter rejected
-  WITHDRAWN = 'withdrawn', // Student withdrew
-  EXPIRED = 'expired', // Time-based expiration
-  CANCELLED = 'cancelled', // Role cancelled
+  ACCEPTED = 'ACCEPTED', // Student accepted offer
+  REJECTED = 'REJECTED', // Recruiter rejected
+  WITHDRAWN = 'WITHDRAWN', // Student withdrew
+  EXPIRED = 'EXPIRED', // Time-based expiration
+  CANCELLED = 'CANCELLED', // Role cancelled
 }
 
 /**

@@ -47,11 +47,11 @@ export default function SwipeContainer({ cards: initialCards, onSwipe, onEmpty, 
       console.error('Swipe failed:', error);
       setCards([activeCard, ...newCards]);
       // Refresh limit status to be sure
-      api.get('/interest/limit').then((res) => setLimitStatus(res.data));
+      api.get('/interest/limit').then((res) => setLimitStatus((res as any).data));
     }
   };
 
-  const { controls, onDrag, onDragEnd, direction, isDragging } = useSwipeGesture({
+  const { controls, onDrag, onDragEnd, direction } = useSwipeGesture({
     onSwipeLeft: () => handleSwipe('left'),
     onSwipeRight: () => handleSwipe('right'),
   });
@@ -105,7 +105,7 @@ export default function SwipeContainer({ cards: initialCards, onSwipe, onEmpty, 
               dragElastic={0.7}
               onDrag={isTop ? onDrag : undefined}
               onDragEnd={isTop ? onDragEnd : undefined}
-              // @ts-ignore - Framer motion types issue with controls
+              // @ts-expect-error - Framer motion types issue with controls
               animate={isTop ? controls : undefined}
               className="cursor-grab active:cursor-grabbing"
             >

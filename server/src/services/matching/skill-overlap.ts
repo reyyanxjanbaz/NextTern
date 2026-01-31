@@ -52,8 +52,8 @@ export class SkillOverlapCalculator {
         }
 
         // Bonus for proficiency
-        if (match.proficiency === ProficiencyLevel.EXPERT) skillScore += 0.3;
-        if (match.proficiency === ProficiencyLevel.ADVANCED) skillScore += 0.2;
+        if (match.proficiency === 'expert') skillScore += 0.3;
+        if (match.proficiency === 'advanced') skillScore += 0.2;
 
         weightedScore += skillScore;
       }

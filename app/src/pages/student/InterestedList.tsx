@@ -14,7 +14,7 @@ export default function InterestedList() {
   const loadInterests = async () => {
     try {
       const res = await api.get('/interest/interested');
-      setInterests(res.data);
+      setInterests((res as any).data);
     } catch (error) {
       console.error('Failed to load interests', error);
     } finally {
@@ -51,11 +51,14 @@ export default function InterestedList() {
               // This mapping is necessary because the API returns raw Prisma objects
               // and our components expect the Card structure
               const card: InternshipCardType = {
+                state: 'open' as any,
+                actions: [],
+                createdAt: new Date(),
+                updatedAt: new Date(),
+                ownerId: 'dummy',
                 id: internship.id,
                 type: 'internship',
                 summary: {
-                  id: internship.id,
-                  type: 'internship',
                   title: internship.title,
                   headline: internship.title,
                   subheadline: internship.company.name,

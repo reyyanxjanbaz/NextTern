@@ -1,11 +1,12 @@
 import { Router } from 'express';
-import { internshipService } from '../../services/internship';
-import { requireAuth, requireRole } from '../middleware/auth';
+import { UserRole } from '@nexttern/shared';
+import { internshipService } from '../../services/internship.js';
+import { requireAuth, requireRole } from '../middleware/auth.js';
 
 const router = Router();
 
-// Create internship
-router.post('/', requireAuth, requireRole(['recruiter']), async (req, res, next) => {
+// Create internshipUserRole.RECRUITER
+router.post('/', requireAuth, requireRole([UserRole.RECRUITER]), async (req, res, next) => {
   try {
     const internship = await internshipService.createInternship(req.user!.id, req.body);
     res.status(201).json(internship);
@@ -15,7 +16,7 @@ router.post('/', requireAuth, requireRole(['recruiter']), async (req, res, next)
 });
 
 // Get all internships for current recruiter
-router.get('/my-internships', requireAuth, requireRole(['recruiter']), async (req, res, next) => {
+router.get('/my-internships', requireAuth, requireRole([UserRole.RECRUITER]), async (req, res, next) => {
   try {
     const internships = await internshipService.getRecruiterInternships(req.user!.id);
     res.json(internships);
@@ -38,7 +39,7 @@ router.get('/:id', requireAuth, async (req, res, next) => {
 });
 
 // Update internship
-router.put('/:id', requireAuth, requireRole(['recruiter']), async (req, res, next) => {
+router.put('/:id', requireAuth, requireRole([UserRole.RECRUITER]), async (req, res, next) => {
   try {
     // TODO: Check ownership
     const internship = await internshipService.updateInternship(req.params.id, req.body);
@@ -49,7 +50,7 @@ router.put('/:id', requireAuth, requireRole(['recruiter']), async (req, res, nex
 });
 
 // Delete internship
-router.delete('/:id', requireAuth, requireRole(['recruiter']), async (req, res, next) => {
+router.delete('/:id', requireAuth, requireRole([UserRole.RECRUITER]), async (req, res, next) => {
   try {
     // TODO: Check ownership
     await internshipService.deleteInternship(req.params.id);

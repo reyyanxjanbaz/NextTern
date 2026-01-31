@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { ProfileCard as ProfileCardType } from '../../../../shared/types/profile-card';
-import ProfileCard from '../../components/cards/ProfileCard';
-import { api } from '../../services/api';
+import { ProfileCard } from '../../components/cards/ProfileCard';
 
 export const Shortlist: React.FC = () => {
   const [candidates, setCandidates] = useState<ProfileCardType[]>([]);
   const [loading, setLoading] = useState(true);
   // TODO: Get internshipId from context or route params
-  const internshipId = 'dummy-internship-id'; 
+  // const internshipId = 'dummy-internship-id'; 
 
   useEffect(() => {
     fetchShortlist();
@@ -49,8 +48,8 @@ export const Shortlist: React.FC = () => {
           {candidates.map(candidate => (
             <div key={candidate.id}>
               <ProfileCard 
-                card={candidate} 
-                isExpanded={false}
+                profile={candidate} 
+                defaultExpanded={false}
                 onAction={() => {}}
               />
             </div>

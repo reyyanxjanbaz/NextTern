@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { api } from '../../services/api';
 
 export const Onboarding: React.FC = () => {
-  const navigate = useNavigate();
   const [role, setRole] = useState<'STUDENT' | 'RECRUITER' | null>(null);
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'sent' | 'error'>('idle');

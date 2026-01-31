@@ -22,7 +22,7 @@ export const MatchExplanation: React.FC<MatchExplanationProps> = ({
     if (isOpen) {
       setLoading(true);
       api.get(`/matches/explain/${internshipId}`)
-        .then(res => setData(res.data))
+        .then(res => setData((res as any).data))
         .catch(console.error)
         .finally(() => setLoading(false));
     }

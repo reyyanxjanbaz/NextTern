@@ -1,5 +1,4 @@
 import { prisma } from '../db/client.js';
-import { Prisma } from '@prisma/client';
 
 export const profileService = {
   /**
@@ -23,6 +22,7 @@ export const profileService = {
     // For simple updates, we can pass data directly if it matches schema
     // But we need to be careful with JSON fields and arrays
     
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { skills, projects, ...profileData } = data;
 
     // Ensure arrays are properly formatted

@@ -24,7 +24,7 @@ export const CardActions: React.FC<CardActionsProps> = ({
 
   const getIcon = (iconName?: string) => {
     if (!iconName) return null;
-    // @ts-ignore - Dynamic icon access
+    // @ts-expect-error - Dynamic icon access
     const Icon = (Icons[iconName as keyof typeof Icons] || Icons.Circle) as React.ElementType;
     return <Icon className="w-4 h-4 mr-2" />;
   };

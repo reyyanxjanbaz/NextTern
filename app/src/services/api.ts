@@ -52,7 +52,7 @@ class ApiClient {
     return this.request<T>(endpoint, { ...options, method: 'GET' });
   }
 
-  post<T>(endpoint: string, body: any, options?: RequestOptions) {
+  post<T>(endpoint: string, body: any = {}, options?: RequestOptions) {
     return this.request<T>(endpoint, {
       ...options,
       method: 'POST',

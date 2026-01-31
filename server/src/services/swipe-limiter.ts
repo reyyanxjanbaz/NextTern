@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../db/client.js';
 import { startOfDay, endOfDay } from 'date-fns';
-
-const prisma = new PrismaClient();
 
 const DAILY_SWIPE_LIMIT = 50;
 
