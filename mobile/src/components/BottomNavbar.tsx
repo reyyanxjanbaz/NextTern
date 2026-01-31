@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, Animated, Easing } from 'react-native';
 import { styled } from 'nativewind';
-import { Briefcase, MessageSquare, ArrowLeftRight, FileText, LayoutDashboard } from 'lucide-react-native';
+import { Briefcase, MessageSquare, ArrowLeftRight, ListTodo, UserRound } from 'lucide-react-native';
 import { api, NotificationBadges } from '../services/api';
 
 const StyledText = styled(Text);
@@ -23,8 +23,8 @@ const tabs: TabItem[] = [
   { name: 'Jobs', icon: Briefcase, label: 'Jobs' },
   { name: 'Chat', icon: MessageSquare, label: 'Chat' },
   { name: 'Swipe', icon: ArrowLeftRight, label: 'Swipe' },
-  { name: 'Applications', icon: FileText, label: 'Track' },
-  { name: 'Dashboard', icon: LayoutDashboard, label: 'Profile' },
+  { name: 'Applications', icon: ListTodo, label: 'Track' },
+  { name: 'Dashboard', icon: UserRound, label: 'Profile' },
 ];
 
 interface TabButtonProps {
